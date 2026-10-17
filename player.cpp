@@ -936,7 +936,10 @@ Press <c=pink>?<c=yellow> and then a letter for skill description.<c=/>");
       if (sk_num >= 'a' && sk_num <= 'z') {
         sk_num = sk_num - 'a' + 1;
       } else {
-        sk_num = sk_num - 'Z' + 27;
+        sk_num = sk_num - 'A' + 27;
+      }
+      if (sk_num >= SKILL_MAX) {
+        continue; // No skill has this letter
       }
       Skill_type sk = Skill_type(sk_num);
 
