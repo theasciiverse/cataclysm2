@@ -287,7 +287,7 @@ linedraw += '_';
 
       pos = next_break;
 
-      if (text[pos] == '\n') { // A forced break!
+      if (pos < text.size() && text[pos] == '\n') { // A forced break!
 //debugmsg("Pushing ~%s~", line.c_str());
         ret.push_back(line);
         line = color_tag;
