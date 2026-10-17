@@ -796,8 +796,8 @@ void Game::clean_up_dead_entities()
         }
       }
       ent->die();
+      it = entities.erase(it);  // reads ent->uid, so before the delete
       delete ent;
-      it = entities.erase(it);
     } else {
       it++;
     }

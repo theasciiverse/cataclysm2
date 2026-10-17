@@ -11,3 +11,11 @@ save/
 !data/*.txt
 !data/help/*.txt
 *.prof
+
+# Asciiverse packaging
+out/
+stage/
+dist/
+.deps/
+__pycache__/
+!asciiverse/*.txt
