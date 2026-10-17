@@ -4,6 +4,16 @@
 #include <sys/stat.h>
 #include <dirent.h>
 #include <fstream>
+#include <cstdlib>
+#include <climits>
+#if (defined _WIN32 || defined __WIN32__)
+#include <windows.h>
+#elif defined __APPLE__
+#include <mach-o/dyld.h>
+#include <unistd.h>
+#else
+#include <unistd.h>
+#endif
 
 std::string DATA_DIR;
 std::string CUSS_DIR;
@@ -209,16 +219,102 @@ void chomp(std::istream &data)
   }
 }
 
+// The folder the program itself is in, or "" if that cannot be found.
+static std::string program_dir()
+{
+  std::string path;
+#if (defined _WIN32 || defined __WIN32__)
+  char buf[4096];
+  DWORD len = GetModuleFileNameA(NULL, buf, sizeof(buf));
+  if (len > 0 && len < sizeof(buf)) {
+    path.assign(buf, len);
+  }
+#elif defined __APPLE__
+  char buf[4096];
+  uint32_t size = sizeof(buf);
+  if (_NSGetExecutablePath(buf, &size) == 0) {
+    char real[PATH_MAX];
+    path = realpath(buf, real) ? real : buf;
+  }
+#else
+  char buf[4096];
+  ssize_t len = readlink("/proc/self/exe", buf, sizeof(buf) - 1);
+  if (len > 0) {
+    path.assign(buf, len);
+  }
+#endif
+  size_t slash = path.find_last_of("/\\");
+  if (slash == std::string::npos) {
+    return "";
+  }
+  return path.substr(0, slash);
+}
+
+// Makes every missing folder along name, like mkdir -p.
+static void create_directories(const std::string &name)
+{
+  for (size_t i = 1; i <= name.size(); i++) {
+    if (i == name.size() || name[i] == '/' || name[i] == '\\') {
+      std::string part = name.substr(0, i);
+      if (!directory_exists(part)) {
+        create_directory(part);
+      }
+    }
+  }
+}
+
+// The player's data folder: $XDG_DATA_HOME/cataclysm2, else
+// ~/.local/share/cataclysm2 (%APPDATA%\cataclysm2 on Windows).
+static std::string user_data_dir()
+{
+#if (defined _WIN32 || defined __WIN32__)
+  const char *appdata = getenv("APPDATA");
+  if (appdata && *appdata) {
+    return std::string(appdata) + "\\cataclysm2";
+  }
+#else
+  const char *xdg = getenv("XDG_DATA_HOME");
+  if (xdg && xdg[0] == '/') {
+    return std::string(xdg) + "/cataclysm2";
+  }
+  const char *home = getenv("HOME");
+  if (home && *home) {
+    return std::string(home) + "/.local/share/cataclysm2";
+  }
+#endif
+  return "";
+}
+
+/* The game's data and interface files are read-only and ship beside the
+ * program, in data/ and cuss/; they are looked for there first, then in the
+ * folder the game was started in.  Worlds are saved in the player's data
+ * folder, never beside the program.  --data-dir, --cuss-dir and --save-dir
+ * still choose others.
+ */
 void set_default_dirs()
 {
+  std::string here = program_dir();
   if (DATA_DIR.empty()) {
-    DATA_DIR = "./data";
+    if (!here.empty() && directory_exists(here + "/data")) {
+      DATA_DIR = here + "/data";
+    } else {
+      DATA_DIR = "./data";
+    }
   }
   if (CUSS_DIR.empty()) {
-    CUSS_DIR = "./cuss";
+    if (!here.empty() && directory_exists(here + "/cuss")) {
+      CUSS_DIR = here + "/cuss";
+    } else {
+      CUSS_DIR = "./cuss";
+    }
   }
   if (SAVE_DIR.empty()) {
-    SAVE_DIR = "./save";
+    SAVE_DIR = user_data_dir();
+    if (SAVE_DIR.empty()) {
+      SAVE_DIR = "./save";
+    } else {
+      create_directories(SAVE_DIR);
+    }
   }
 }
 

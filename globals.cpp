@@ -83,9 +83,9 @@ void init_missions()
 
 void load_mapgen_specs()
 {
-  std::vector<std::string> mapgen_files = files_in("data/mapgen", "map");
+  std::vector<std::string> mapgen_files = files_in(DATA_DIR + "/mapgen", "map");
   for (int i = 0; i < mapgen_files.size(); i++) {
-    std::string filename = "data/mapgen/" + mapgen_files[i];
+    std::string filename = DATA_DIR + "/mapgen/" + mapgen_files[i];
     if (!filename.empty() && filename.find("/.") == std::string::npos) {
       MAPGEN_SPECS.load_from(filename);
     }
