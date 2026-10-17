@@ -19,7 +19,8 @@ void print_scrollbar(Window *win, int posx, int posy, int length, int offset,
   (ele)->sizey = szy;\
   (ele)->selected = false;\
   (ele)->selectable = selectable;\
-  (ele)->align = ALIGN_LEFT
+  (ele)->align = ALIGN_LEFT;\
+  (ele)->v_align = ALIGN_TOP
 
 std::string cuss::element_type_name(cuss::element_type type)
 {
@@ -49,10 +50,18 @@ std::string element::save_data()
 void element::load_data(std::istream &datastream)
 {
  name = load_to_delim(datastream, STD_DELIM);
- int tmpalign, tmpvalign;
+ int tmpalign = ALIGN_LEFT, tmpvalign = ALIGN_TOP;
 
  datastream >> posx >> posy >> sizex >> sizey >> selectable >> tmpalign >>
                tmpvalign;
+// The editor saved whatever was in v_align before it was always set, so the
+// shipped interfaces hold stray numbers there; anything else is top-aligned.
+ if (tmpalign < 0 || tmpalign >= ALIGN_MAX) {
+  tmpalign = ALIGN_LEFT;
+ }
+ if (tmpvalign < 0 || tmpvalign >= ALIGN_VERT_MAX) {
+  tmpvalign = ALIGN_TOP;
+ }
  align = alignment(tmpalign);
  v_align = vertical_alignment(tmpvalign);
 }

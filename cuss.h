@@ -59,6 +59,7 @@ namespace cuss {
     element() { name = ""; posx = 0; posy = 0; sizex = 0; sizey = 0;
                 selected = false; selectable = false;
                 fg = c_ltgray; bg = c_black; owns_data = true;
+                align = ALIGN_LEFT; v_align = ALIGN_TOP;
                 recently_selected = false; }
     virtual ~element() { }
 
