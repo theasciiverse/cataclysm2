@@ -335,6 +335,9 @@ void Window::refresh()
 void init_display()
 {
  initscr();
+#ifdef NCURSES_VERSION
+ set_escdelay(25); // Esc closes menus; don't wait a second for more keys
+#endif
  noecho();
  cbreak();
  keypad(stdscr, true);
