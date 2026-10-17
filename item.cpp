@@ -1243,7 +1243,7 @@ std::string list_items(std::vector<Item> *items)
     bool inserted = false;
     if (count[i] >= 1) {
       for (int n = 0; !inserted && n < names.size(); n++) {
-        if (count[i] > amounts[i]) {
+        if (count[i] > amounts[n]) {
           inserted = true;
           names.insert( names.begin() + n, name );
           amounts.insert( amounts.begin() + n, count[i] );
