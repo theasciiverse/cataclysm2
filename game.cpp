@@ -974,7 +974,9 @@ void Game::launch_projectile(Entity* shooter, Item it, Ranged_attack attack,
   int retarget_range = 0;
   if (attack.rounds < 1) {
     attack.rounds = 1;
-  } else if (it.is_real()) {
+  } else if (it.is_real() && it.get_type() &&
+             it.get_type()->get_class() == ITEM_CLASS_LAUNCHER) {
+// (A thrown item is real too, but it is no launcher and has no skill_used.)
 /* If we're firing a multiple-round weapon, and we kill our original target or
  * wind up targeting a space without a monster in it, we can re-target to a
  * nearby monster between rounds.  The range of this retargeting is dependent
