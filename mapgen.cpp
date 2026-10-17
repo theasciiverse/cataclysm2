@@ -115,6 +115,7 @@ bool Variable_terrain::contains(Terrain* terrain)
 Item_area::Item_area()
 {
   total_chance = 0;
+  overall_chance = 0;
   use_all_items = false;
   all_index = 0;
   all_count = 0;
@@ -874,7 +875,9 @@ bool Mapgen_spec::load_data(std::istream &data)
         data >> tmp_area.overall_chance;
       }
 
-      if (tmp_area.overall_chance < 1) {
+      if (tmp_area.use_all_items) {
+// No chance is read for all_items: and all_item_group:
+      } else if (tmp_area.overall_chance < 1) {
         debugmsg("Item chance of '%d' corrected to 1 (%s)",
                  tmp_area.overall_chance, name.c_str());
       } else if (tmp_area.overall_chance > 99) {
@@ -1005,7 +1008,9 @@ bool Mapgen_spec::load_data(std::istream &data)
         data >> tmp_area.overall_chance;
       }
 
-      if (tmp_area.overall_chance < 1) {
+      if (tmp_area.use_all_items) {
+// No chance is read for all_items: and all_item_group:
+      } else if (tmp_area.overall_chance < 1) {
         debugmsg("Item chance of '%d' corrected to 1 (%s)",
                  tmp_area.overall_chance, name.c_str());
       } else if (tmp_area.overall_chance > 99) {
