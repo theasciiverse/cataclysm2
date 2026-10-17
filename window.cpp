@@ -114,7 +114,7 @@ void Window::putstr(int x, int y, nc_color fg, nc_color bg, std::string str,
  va_list ap;
  va_start(ap, str);
  char buff[8192];
- vsprintf(buff, str.c_str(), ap);
+ vsnprintf(buff, sizeof(buff), str.c_str(), ap);
  va_end(ap);
 
  std::string prepped = buff;
@@ -123,7 +123,7 @@ void Window::putstr(int x, int y, nc_color fg, nc_color bg, std::string str,
  if (prepped.find("<c=") == std::string::npos) {
 // No need to do color segments, so just print!
   wattron(w, col);
-  mvwprintw(w, y, x, buff);
+  mvwaddstr(w, y, x, buff);
   wattroff(w, col);
  } else { // We need to do color segments!
   wmove(w, y, x);
@@ -132,7 +132,7 @@ void Window::putstr(int x, int y, nc_color fg, nc_color bg, std::string str,
   parse_color_tags(prepped, segments, color_pairs, fg, bg);
   for (int i = 0; i < segments.size(); i++) {
    wattron( w, color_pairs[i] );
-   wprintw(w, segments[i].c_str());
+   waddstr(w, segments[i].c_str());
    wattroff( w, color_pairs[i] );
   }
  }        // We need to do color segments!
@@ -147,14 +147,14 @@ void Window::putstr_raw(int x, int y, nc_color fg, nc_color bg, std::string str,
  va_list ap;
  va_start(ap, str);
  char buff[8192];
- vsprintf(buff, str.c_str(), ap);
+ vsnprintf(buff, sizeof(buff), str.c_str(), ap);
  va_end(ap);
 
  std::string prepped = buff;
  long col = get_color_pair(fg, bg);
 
  wattron(w, col);
- mvwprintw(w, y, x, buff);
+ mvwaddstr(w, y, x, buff);
  wattroff(w, col);
 }
  
@@ -166,7 +166,7 @@ void Window::putstr_n(int x, int y, nc_color fg, nc_color bg, int maxlength,
  va_list ap;
  va_start(ap, str);
  char buff[8192];
- vsprintf(buff, str.c_str(), ap);
+ vsnprintf(buff, sizeof(buff), str.c_str(), ap);
  va_end(ap);
 
  std::string prepped = buff;
@@ -175,7 +175,7 @@ void Window::putstr_n(int x, int y, nc_color fg, nc_color bg, int maxlength,
  if (prepped.find("<c=") == std::string::npos) {
 // No need to do color segments, so just print!
   wattron(w, col);
-  mvwprintw(w, y, x, prepped.substr(0, maxlength).c_str());
+  mvwaddstr(w, y, x, prepped.substr(0, maxlength).c_str());
   wattroff(w, col);
  } else { // We need to do color segments!
   wmove(w, y, x);
@@ -185,11 +185,11 @@ void Window::putstr_n(int x, int y, nc_color fg, nc_color bg, int maxlength,
   for (int i = 0; i < segments.size(); i++) {
    wattron( w, color_pairs[i] );
    if (segments[i].length() > maxlength) {
-    wprintw(w, segments[i].substr(0, maxlength).c_str());
+    waddstr(w, segments[i].substr(0, maxlength).c_str());
     wattroff( w, color_pairs[i] );
     return; // Stop; we've run out of space.
    } else {
-    wprintw(w, segments[i].c_str());
+    waddstr(w, segments[i].c_str());
     maxlength -= segments[i].length();
     wattroff( w, color_pairs[i] );
    }
@@ -206,7 +206,7 @@ void Window::putstr_r(int x, int y, nc_color fg, nc_color bg, int maxlength,
  va_list ap;
  va_start(ap, str);
  char buff[8192];
- vsprintf(buff, str.c_str(), ap);
+ vsnprintf(buff, sizeof(buff), str.c_str(), ap);
  va_end(ap);
 
  std::string prepped = buff;
@@ -220,7 +220,7 @@ void Window::putstr_r(int x, int y, nc_color fg, nc_color bg, int maxlength,
  if (prepped.find("<c=") == std::string::npos) {
 // No need to do color segments, so just print!
   wattron(w, col);
-  mvwprintw(w, y, x, prepped.substr(0, maxlength).c_str());
+  mvwaddstr(w, y, x, prepped.substr(0, maxlength).c_str());
   wattroff(w, col);
  } else { // We need to do color segments!
   wmove(w, y, x);
@@ -230,11 +230,11 @@ void Window::putstr_r(int x, int y, nc_color fg, nc_color bg, int maxlength,
   for (int i = 0; i < segments.size(); i++) {
    wattron( w, color_pairs[i] );
    if (segments[i].length() > maxlength) {
-    wprintw(w, segments[i].substr(0, maxlength).c_str());
+    waddstr(w, segments[i].substr(0, maxlength).c_str());
     wattroff( w, color_pairs[i] );
     return; // Stop; we've run out of space.
    } else {
-    wprintw(w, segments[i].c_str());
+    waddstr(w, segments[i].c_str());
     maxlength -= segments[i].length();
     wattroff( w, color_pairs[i] );
    }
@@ -250,7 +250,7 @@ void Window::putstr_c(int x, int y, nc_color fg, nc_color bg, int maxlength,
  va_list ap;
  va_start(ap, str);
  char buff[8192];
- vsprintf(buff, str.c_str(), ap);
+ vsnprintf(buff, sizeof(buff), str.c_str(), ap);
  va_end(ap);
 
  std::string prepped = buff;
@@ -264,7 +264,7 @@ void Window::putstr_c(int x, int y, nc_color fg, nc_color bg, int maxlength,
  if (prepped.find("<c=") == std::string::npos) {
 // No need to do color segments, so just print!
   wattron(w, col);
-  mvwprintw(w, y, x, prepped.substr(0, maxlength).c_str());
+  mvwaddstr(w, y, x, prepped.substr(0, maxlength).c_str());
   wattroff(w, col);
  } else { // We need to do color segments!
   wmove(w, y, x);
@@ -274,11 +274,11 @@ void Window::putstr_c(int x, int y, nc_color fg, nc_color bg, int maxlength,
   for (int i = 0; i < segments.size(); i++) {
    wattron( w, color_pairs[i] );
    if (segments[i].length() > maxlength) {
-    wprintw(w, segments[i].substr(0, maxlength).c_str());
+    waddstr(w, segments[i].substr(0, maxlength).c_str());
     wattroff( w, color_pairs[i] );
     return; // Stop; we've run out of space.
    } else {
-    wprintw(w, segments[i].c_str());
+    waddstr(w, segments[i].c_str());
     maxlength -= segments[i].length();
     wattroff( w, color_pairs[i] );
    }
@@ -292,7 +292,7 @@ void Window::clear_area(int x1, int y1, int x2, int y2)
   return;
  for (int x = x1; x <= x2; x++) {
   for (int y = y1; y <= y2; y++)
-   putch(x, y, c_black, c_black, 'x');
+   putch(x, y, c_black, c_black, ' ');
  }
 }
 
@@ -362,7 +362,7 @@ void debugmsg(const char *mes, ...)
  va_list ap;
  va_start(ap, mes);
  char buff[2048];
- vsprintf(buff, mes, ap);
+ vsnprintf(buff, sizeof(buff), mes, ap);
  va_end(ap);
  attron(COLOR_PAIR(3));
  mvprintw(0, 0, "DEBUG: %s      \n  Press spacebar...", buff);
@@ -437,7 +437,7 @@ std::string string_input_popup(const char *mes, ...)
  va_list ap;
  va_start(ap, mes);
  char buff[1024];
- vsprintf(buff, mes, ap);
+ vsnprintf(buff, sizeof(buff), mes, ap);
  va_end(ap);
  return string_edit_popup("", buff);
 }
@@ -448,7 +448,7 @@ std::string string_edit_popup(std::string orig, const char *mes, ...)
  va_list ap;
  va_start(ap, mes);
  char buff[1024];
- vsprintf(buff, mes, ap);
+ vsnprintf(buff, sizeof(buff), mes, ap);
  va_end(ap);
  int startx = strlen(buff) + 2;
  Window w(0, 11, 80, 3);
@@ -490,7 +490,7 @@ int int_input_popup(const char *mes, ...)
  va_list ap;
  va_start(ap, mes);
  char buff[1024];
- vsprintf(buff, mes, ap);
+ vsnprintf(buff, sizeof(buff), mes, ap);
  va_end(ap);
  int startx = strlen(buff) + 3;
  Window w(0, 11, 80, 3);
@@ -548,7 +548,7 @@ long popup_getkey(const char *mes, ...)
  va_list ap;
  va_start(ap, mes);
  char buff[8192];
- vsprintf(buff, mes, ap);
+ vsnprintf(buff, sizeof(buff), mes, ap);
  va_end(ap);
  std::string tmp = buff;
  int width = 0;
@@ -591,7 +591,7 @@ bool query_yn(const char *mes, ...)
  va_list ap;
  va_start(ap, mes);
  char buff[8192];
- vsprintf(buff, mes, ap);
+ vsnprintf(buff, sizeof(buff), mes, ap);
  va_end(ap);
  std::string tmp = buff;
  int width = 0;
@@ -678,7 +678,7 @@ void popup(const char *mes, ...)
  va_list ap;
  va_start(ap, mes);
  char buff[8192];
- vsprintf(buff, mes, ap);
+ vsnprintf(buff, sizeof(buff), mes, ap);
  va_end(ap);
  std::string tmp = buff;
  int width = 0;
@@ -723,7 +723,7 @@ void popup_nowait(const char *mes, ...)
  va_list ap;
  va_start(ap, mes);
  char buff[8192];
- vsprintf(buff, mes, ap);
+ vsnprintf(buff, sizeof(buff), mes, ap);
  va_end(ap);
  std::string tmp = buff;
  int width = 0;
@@ -764,7 +764,7 @@ void popup_fullscreen(const char *mes, ...)
  va_list ap;
  va_start(ap, mes);
  char buff[8192];
- vsprintf(buff, mes, ap);
+ vsnprintf(buff, sizeof(buff), mes, ap);
  va_end(ap);
  std::string tmp = buff;
  int width = 80;
@@ -795,7 +795,7 @@ void popup_scrollable(const char *mes, ...)
   va_list ap;
   va_start(ap, mes);
   char buff[65536];
-  vsprintf(buff, mes, ap);
+  vsnprintf(buff, sizeof(buff), mes, ap);
   va_end(ap);
   std::string tmp = buff;
   int width = 80;

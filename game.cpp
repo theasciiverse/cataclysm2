@@ -1331,7 +1331,7 @@ void Game::add_msg(std::string msg, ...)
   va_list ap;
   va_start(ap, msg);
 // sprintf the full message into buff
-  vsprintf(buff, msg.c_str(), ap);
+  vsnprintf(buff, sizeof(buff), msg.c_str(), ap);
   va_end(ap);
 // Make buff back into a string, and capitalize it
   std::string text(buff);
@@ -1355,7 +1355,7 @@ bool Game::msg_query_yn(std::string msg, ...)
   char buff[2048];
   va_list ap;
   va_start(ap, msg);
-  vsprintf(buff, msg.c_str(), ap);
+  vsnprintf(buff, sizeof(buff), msg.c_str(), ap);
   va_end(ap);
   std::string text(buff);
   text = capitalize(text);
