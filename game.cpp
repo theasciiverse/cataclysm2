@@ -352,7 +352,9 @@ void Game::do_action(Interface_action act)
     case IACTION_MOVE_UP:
       if (!map->has_flag(TF_STAIRS_UP, player->pos)) {
         add_msg("You cannot go up here.");
-        player_move_vertical(1);  // Snuck this in for debugging purposes
+        if (TESTING_MODE) { // Snuck this in for debugging purposes
+          player_move_vertical(1);
+        }
       } else {
         player_move_vertical(1);
       }
@@ -361,7 +363,9 @@ void Game::do_action(Interface_action act)
     case IACTION_MOVE_DOWN:
       if (!map->has_flag(TF_STAIRS_DOWN, player->pos)) {
         add_msg("You cannot go down here.");
-        player_move_vertical(-1); // Snuck this in for debugging purposes
+        if (TESTING_MODE) { // Snuck this in for debugging purposes
+          player_move_vertical(-1);
+        }
       } else {
         player_move_vertical(-1);
       }
