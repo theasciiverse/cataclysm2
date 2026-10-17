@@ -1521,7 +1521,7 @@ void Entity::take_off_item_uid(int uid)
 void Entity::apply_item_uid(int uid)
 {
 // Find the item.
-  Item* it;
+  Item* it = NULL;
   if (weapon.is_real() && weapon.get_uid() == uid) {
     it = &weapon;
   }
@@ -1669,7 +1669,7 @@ void Entity::finish_reading(Item* it)
   if (!it) {
     debugmsg("Entity::finish_reading(NULL) called!");
     return;
-  } else if (!it->is_real() || !it->get_item_class() == ITEM_CLASS_BOOK) {
+  } else if (!it->is_real() || it->get_item_class() != ITEM_CLASS_BOOK) {
     debugmsg("Entity::finish_reading() passed a bad item!");
     return;
   }

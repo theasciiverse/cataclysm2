@@ -57,7 +57,6 @@ bool remove_directory(std::string name)
 
   dir = opendir(name.c_str());
   if (dir == NULL) {
-    closedir(dir);
     return false;
   }
 

@@ -288,7 +288,7 @@ std::string Time::get_text(bool twentyfour)
  */
 int Time::get_light_level()
 {
-  int night_level;
+  int night_level = 1;
   int day_level = DAY_LIGHT;
   switch (get_moon_phase()) {
     case MOON_NEW:    night_level = 1; break;

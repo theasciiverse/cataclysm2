@@ -212,7 +212,9 @@ void Attack::adjust_with_skills(Skill_set skills)
     pierce_adj = (damage[DAMAGE_PIERCE] + pierce_adj) / 2;
   }
 
-  int final_bash, final_cut, final_pierce;
+  int final_bash   = damage[DAMAGE_BASH],
+      final_cut    = damage[DAMAGE_CUT],
+      final_pierce = damage[DAMAGE_PIERCE];
   if (bash_adj < damage[DAMAGE_BASH]) {
     if (!one_in(3)) {
       final_bash = rng(bash_adj, damage[DAMAGE_BASH]);
@@ -229,10 +231,10 @@ void Attack::adjust_with_skills(Skill_set skills)
   }
   if (pierce_adj < damage[DAMAGE_PIERCE]) {
     if (!one_in(3)) {
-      final_pierce = rng(cut_adj, damage[DAMAGE_PIERCE]);
+      final_pierce = rng(pierce_adj, damage[DAMAGE_PIERCE]);
     }
   } else {
-    final_pierce   = rng(damage[DAMAGE_PIERCE],   cut_adj   );
+    final_pierce   = rng(damage[DAMAGE_PIERCE],   pierce_adj);
   }
 
 // Don't do more than double our damage.  Skills higher than 7 still matter;
@@ -406,7 +408,7 @@ int Ranged_attack::roll_variance()
 
 Damage_set Ranged_attack::roll_damage(Ranged_hit_type hit)
 {
-  double min, max;
+  double min = 1.0, max = 1.0;
   switch (hit) {
     case RANGED_HIT_NULL: // Shouldn't ever happen
       min = 1.0;
