@@ -158,7 +158,11 @@ bool Game::starting_menu()
 
     } else if (ch == 'l' || ch == 'L') {
 // TODO: Load character here
-      return true;
+// Characters are never saved yet, so there is nothing to load; returning true
+// here started the main loop with no player, which quit at once.
+      popup("Cataclysm II is an unfinished alpha: characters cannot be\n\
+saved or loaded yet.  Your worlds are kept, and a new\n\
+character can start in one (W: Manage Worlds).");
 
     } else if (ch == 'w' || ch == 'W') {
       current_world = world_screen();
