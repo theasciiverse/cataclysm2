@@ -96,3 +96,9 @@ two have commits of their own (Wad67, 2017, one UI fix-up; mytinylab,
 - `asciiverse/record/`: the preview driver (`cataclysm2.py`, with
   `rec.py` from the NetBSD games) and `asciiverse/casts/cataclysm2.cast`.
 - `.gitignore`: the build folders.
+
+## Ours
+
+- **How to play it, at the top of README.md.** A short note on installing and
+  starting it with av, or from a release archive; the original text follows
+  unchanged.
