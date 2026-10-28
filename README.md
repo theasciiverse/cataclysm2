@@ -6,9 +6,6 @@
 > av play cataclysm2
 > ```
 >
-> Or download the archive for your system from this repository's Releases,
-> unpack it and run `./cataclysm2`.
->
 > The original README follows.
 
 # Cataclysm 2
