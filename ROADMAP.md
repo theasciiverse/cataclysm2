@@ -76,3 +76,8 @@ Whales' "bad win": a seaworthy boat and a working GPS.
 - [ ] The four factions (Cultists, Military, Naturalists, Scientists),
       their missions, rank, and their fight for the Lab
 - [ ] Story mode and sandbox mode
+- [ ] The rest of the Lab's machinery from Whales' notes: four corner
+      substations, the other passcards, the Control Station
+- [ ] Balance from people playing it: food clock, monster strength, prices
+- [ ] Whales' unfinished item types: gun mods, bionics (`docs/todo.txt`)
+- [ ] Smaller saves (a world's map files are tens of megabytes of text)
