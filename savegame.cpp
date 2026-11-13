@@ -420,6 +420,8 @@ bool Game::save_game()
   out << "Uids: " << next_item_uid << " " << next_furniture_uid << std::endl;
   out << "Map: " << map->posx << " " << map->posy << " " << map->posz <<
          std::endl;
+  out << "Boat: " << boat.hull << " " << boat.sail << " " << boat.gps << " " <<
+         boat.rations << " " << boat.drinks << std::endl;
   out << "Player:" << std::endl << player->save_data() << std::endl;
   for (std::list<Entity*>::iterator it = entities.instances.begin();
        it != entities.instances.end();
@@ -504,6 +506,12 @@ bool Game::load_game(std::string world_name)
       fin >> next_item_uid >> next_furniture_uid;
     } else if (ident == "map:") {
       fin >> mapx >> mapy >> mapz;
+    } else if (ident == "boat:") {
+      int h, s, g;
+      fin >> h >> s >> g >> boat.rations >> boat.drinks;
+      boat.hull = (h != 0);
+      boat.sail = (s != 0);
+      boat.gps  = (g != 0);
     } else if (ident == "player:") {
       ok = player->load_data(fin);
     } else if (ident == "monster:") {
@@ -593,11 +601,11 @@ void Game::player_death()
                                                     player->last_damage;
   popup("<c=ltred>You have died.<c=/>\n\
 \n\
-%s survived %d day%s on the island.\n\
+%s survived %s on the island.\n\
 Killed by %s.\n\
 \n\
 Death is permanent: this game is over.", player->get_name().c_str(),
-        days, days == 1 ? "" : "s", cause.c_str());
+        days_text(days).c_str(), cause.c_str());
   delete_save();
   game_over = true;
   player->action_points = 0;

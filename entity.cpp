@@ -196,6 +196,8 @@ Entity::Entity()
   pain = 0;
   painkill = 0;
   special_timer = 0;
+  summons_used = 0;   // was never set
+  parent_uid = -1;
   experience = 0;
   morale = 0;
 
@@ -1369,7 +1371,7 @@ Item Entity::remove_item(Item* it, int uid, int count)
     return ret;
   }
   int ret_count = count;
-  if (weapon.is_real() && (&weapon == it || weapon.get_uid()) == uid) {
+  if (weapon.is_real() && (&weapon == it || weapon.get_uid() == uid)) {
     if (count == 0) {
       ret_count = weapon.count;
     } else if (weapon.count < count) {

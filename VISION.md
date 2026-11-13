@@ -86,3 +86,17 @@ are recorded below as they are made.
   own folder beside its map files, `game.sav`. Death deletes it (a
   roguelike, as Whales' introduction says: "death is permanent"). Quitting
   saves.
+- **Sleep, healing, starvation** (2026-11-13): the engine counted fatigue
+  but had no way to sleep; we added sleep (`$`), slow natural healing
+  (faster asleep), and damage from going about six days without food or
+  two without water. Whales' blog asks for pressing clocks but sets no
+  numbers; these are ours.
+- **The way off the island** (2026-11-13): Whales' "bad win" names a boat
+  that survives the high seas and a working GPS network. Ours: the wreck of
+  the player's own boat lies on the starting beach; the radio from the
+  wreck hears an automatic relay at Saltcove, a walled harbour on the
+  mainland (our name), that GPS units can still follow when the
+  satellites cannot. The boat needs its hull patched (10 wood planks, 60
+  nails, a hammer), a mast and sail (2 tarps, 2 ropes, a metal pole), a GPS
+  unit, and 8 rations aboard (4 to drink). Victory deletes the save, like
+  death.

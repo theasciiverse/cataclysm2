@@ -19,19 +19,28 @@ everything below is in. Whales' alpha as packaged before is
 
 Whales' early game (https://whalesdev.tumblr.com/post/74991567472).
 
-- [ ] The wreck: raw wood, a tool or two, a decent melee weapon, a radio
-- [ ] A help key in the game, and a first-day guide for new players
-- [ ] Hunger, thirst and fatigue that can kill, and a faster food clock
-- [ ] Crashes and soft-locks found by playing, fixed
+- [x] The wreck: raw wood, a tool or two, a decent melee weapon, a radio
+      (the crowbar and the radio joined Whales' planks, rope and food)
+- [x] A help key in the game (`?`), a page of keys and goals, and a
+      first-day guide in the messages
+- [x] Sleep (`$`): there was no way to sleep; fatigue only grew
+- [x] Natural healing, faster asleep; starvation and thirst that kill
+- [x] Long tasks (sleeping, reading, reloading) stop when danger comes near
+      or you are hurt: nothing interrupted them
+- [ ] More crashes and soft-locks found by playing, fixed (ongoing)
 
 ## 0.4.0: the way off the island
 
 Whales' "bad win": a seaworthy boat and a working GPS.
 
-- [ ] The radio picks up a mainland navigation beacon
-- [ ] A boat to repair at the wreck, from parts found on the island
-- [ ] A GPS unit to find, powered
-- [ ] Setting sail ends the game with a victory screen and a summary
+- [x] The radio picks up the Saltcove coastal relay on the mainland, and
+      says what the boat still needs
+- [x] The wreck lies on the beach: examine it to patch the hull (planks,
+      nails, a hammer), rig a mast and sail (tarps, rope, a metal pole),
+      mount a GPS unit and stow food and drink
+- [x] A GPS unit to find (camping and hiking shops, pawn shops, security
+      gear), powered by batteries
+- [x] Setting sail ends the game with a victory screen
 
 ## 0.5.0: the Lab
 

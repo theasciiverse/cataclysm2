@@ -183,6 +183,8 @@ std::string interface_action_name(Interface_action action)
     case IACTION_VIEW_WORLDMAP:           return "view_worldmap";
     case IACTION_CHAR_STATUS:             return "status";
     case IACTION_CHAR_SKILLS:             return "skills";
+    case IACTION_SLEEP:                   return "sleep";
+    case IACTION_HELP:                    return "help";
     case IACTION_QUIT:                    return "quit";
     case IACTION_SAVE:                    return "save";
     case IACTION_DEBUG:                   return "debug";

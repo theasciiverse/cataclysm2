@@ -137,3 +137,29 @@ two have commits of their own (Wad67, 2017, one UI fix-up; mytinylab,
 - The start screen (`data/motd.txt`) says what this is and points bug
   reports to our repository; it gave Whales' email and IRC channel and
   called the game "not intended for general release".
+
+### 0.3.0 and 0.4.0: washed ashore, and the way off the island
+
+- **Sleep** (`$`, `survival.cpp`): there was no way to sleep and fatigue
+  only grew. Sleep pays it back three times as fast as waking adds it and
+  ends when rested (or after twelve hours).
+- **Healing and starving**: one HP to each body part every two hours awake
+  and every half hour asleep, none when starving or parched; past six days
+  without food or two without water the torso takes damage until death.
+- **Interruptions**: no activity was ever interrupted. Sleeping, reading
+  and the rest now stop when a monster is in sight within 15 tiles (heard
+  within 4 when asleep) or when you are hurt.
+- **Help in the game** (`?`), and `data/help/interface.txt`, which the help
+  menu listed as "Interface Tour" but never existed: the keys, staying
+  alive, getting off the island. A first-day guide in the messages.
+- **The way off the island** (`escape.cpp`): Whales' "bad win". The wreck
+  (new terrain `wrecked boat`) lies on the shipwreck beach; examining it
+  shows what it needs and does the work: hull, mast and sail, GPS unit,
+  provisions, and then sailing, which ends the game with a victory screen.
+  The boat's state is saved. New tools `radio` and `GPS unit` (new tool
+  specials `radio` and `gps`); the radio is among the wreck's supplies,
+  with a crowbar and batteries; GPS units, tarps and metal poles were
+  added to item groups (tarps and poles were in none).
+- The HUD clock is in 24-hour time: " PM" did not fit and was cut off.
+- Fixes: `Entity::summons_used` and `parent_uid` were never set; a
+  precedence slip in `Entity::remove_item()` compared a bool with the uid.

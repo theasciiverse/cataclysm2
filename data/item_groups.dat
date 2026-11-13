@@ -17,7 +17,7 @@ done
 
 # Static shipwreck - Items guaranteed to the player!
 name: items_static_shipwreck
-  items: c:5 wood plank / c:1 rope / c:4 rag / c:1 MRE (meat) / c:1 MRE (vegetable) / c:2 beef jerky / c:2 water / c:1 rum / c:2 dry rice / c:1 lighter / c:1 bandages
+  items: c:5 wood plank / c:1 rope / c:4 rag / c:1 MRE (meat) / c:1 MRE (vegetable) / c:2 beef jerky / c:2 water / c:1 rum / c:2 dry rice / c:1 lighter / c:1 bandages / c:1 radio / c:1 crowbar / c:2 batteries
 done
 
 ### Wilderness groups ###
@@ -79,11 +79,11 @@ name: items_home_hardware
 done
 
 name: items_misc_construction
-  items: w:8 work gloves / w:4 hard hat / w:3 boots / w:4 steel-toed boots / w:5 dust mask / w:1 broom / w:10 Simple Structures / w:10 Home Improvement / w:2 Urban Construction
+  items: w:8 work gloves / w:4 hard hat / w:3 boots / w:4 steel-toed boots / w:5 dust mask / w:1 broom / w:10 Simple Structures / w:10 Home Improvement / w:2 Urban Construction / w:6 metal pole / w:3 tarp
 done
 
 name: items_hardware
-  items: w:30 nails / w:15 steel pipe / w:10 wood plank / w:4 rope / w:1 showerhead
+  items: w:30 nails / w:15 steel pipe / w:10 wood plank / w:4 rope / w:1 showerhead / w:4 tarp / w:4 metal pole
 done
 
 name: items_cleaning
@@ -95,7 +95,7 @@ name: items_factory_tools
 done
 
 name: items_hiking_tools
-  items: w:5 rope / w:10 pocket knife / w:10 hunting knife / w:10 hatchet / w:1 large axe / w:1 machete / w:15 rag / w:10 beef jerky / w:2 chocolate bar / w:5 water / w:15 birdseed / w:2 aspirin / w:5 bandages / w:30 flashlight / w:5 Basic First Aid / w:5 Wild Edibles / w:10 23 Camping Tips / w:8 Orienteering and You
+  items: w:5 rope / w:10 pocket knife / w:10 hunting knife / w:10 hatchet / w:1 large axe / w:1 machete / w:15 rag / w:10 beef jerky / w:2 chocolate bar / w:5 water / w:15 birdseed / w:2 aspirin / w:5 bandages / w:30 flashlight / w:5 Basic First Aid / w:5 Wild Edibles / w:10 23 Camping Tips / w:8 Orienteering and You / w:3 tarp / w:2 GPS unit
 done
 
 name: items_hiking_clothes
@@ -121,7 +121,7 @@ done
 
 # General garage junk
 name: items_garage
-  items: w:40 work gloves / w:50 nails / w:10 baseball bat / w:10 golf club / w:1 machete / w:50 hammer / w:45 wrench / w:5 sledgehammer / w:8 steel pipe / w:60 screwdriver / w:30 crowbar / w:30 shovel / w:15 hatchet / w:12 large axe / w:12 nail gun / w:18 rake / w:2 pitchfork / w:5 pruner
+  items: w:40 work gloves / w:50 nails / w:10 baseball bat / w:10 golf club / w:1 machete / w:50 hammer / w:45 wrench / w:5 sledgehammer / w:8 steel pipe / w:60 screwdriver / w:30 crowbar / w:30 shovel / w:15 hatchet / w:12 large axe / w:12 nail gun / w:18 rake / w:2 pitchfork / w:5 pruner / w:3 tarp / w:3 metal pole
 done
 
 # Items for a car mechanic's garage
@@ -307,7 +307,7 @@ name: items_diner_food
 done
 
 name: items_pawn_shop
-  items: w:5 hunting knife / w:3 combat knife / w:1 antique sword / w:7 baseball bat / w:1 large axe / w:1 antique halberd / w:3 diamond / w:3 fedora / w:3 leather jacket / w:3 steel-toed boots / w:1 holster / w:2 purse / w:4 gold ring / w:3 diamond necklace / w:1 USP 9mm / w:1 M1911 / w:1 2-barreled shotgun / w:3 crowbar / w:3 shovel / w:3 lighter / w:3 flashlight / w:2 can 
+  items: w:5 hunting knife / w:3 combat knife / w:1 antique sword / w:7 baseball bat / w:1 large axe / w:1 antique halberd / w:3 diamond / w:3 fedora / w:3 leather jacket / w:3 steel-toed boots / w:1 holster / w:2 purse / w:4 gold ring / w:3 diamond necklace / w:1 USP 9mm / w:1 M1911 / w:1 2-barreled shotgun / w:3 crowbar / w:3 shovel / w:3 lighter / w:3 flashlight / w:2 can / w:3 GPS unit / w:4 radio
 done
 
 
@@ -321,7 +321,7 @@ name: items_survival_food
 done
 
 name: items_security_equipment
-  items: w:1 rope / w:4 pocket knife / w:2 dumbbell / w:3 cap / w:3 safety glasses / w:1 dust mask / w:3 leather gloves / w:2 boots / w:8 holster / w:2 codeine / w:2 amphetamine / w:4 crowbar / w:8 bandages / w:5 first aid kit / w:20 flashlight / w:5 Basic First Aid
+  items: w:1 rope / w:4 pocket knife / w:2 dumbbell / w:3 cap / w:3 safety glasses / w:1 dust mask / w:3 leather gloves / w:2 boots / w:8 holster / w:2 codeine / w:2 amphetamine / w:4 crowbar / w:8 bandages / w:5 first aid kit / w:20 flashlight / w:5 Basic First Aid / w:2 GPS unit / w:3 radio
 done
 
 name: items_security_weapons
@@ -331,7 +331,7 @@ done
 # Any stuff a factory might be producing or studying.
 
 name: items_manufactured_tech
-  items: w:3 pocket knife / w:2 hunting knife / w:4 combat knife / w:3 baton / w:1 antique sword / w:1 antique halberd / w:10 golf club / w:6 chef knife / w:3 frying pan / w:2 showerhead / w:1 diamond / w:15 processor / w:15 RAM / w:12 data cable / w:8 glasses / w:3 safety glasses / w:3 puffy coat / w:6 sneakers / w:2 boots / w:2 steel-toed boots / w:20 batteries / w:1 FN Five-Seven / w:1 KRISS Vector / w:1 FN P90 / w:1 Steyr HS .50 / w:5 MRE (meat) / w:5 MRE (vegetable) / w:3 SPAM / w:3 chicken soup / w:3 chocolate bar / w:3 cola / w:4 energy drink / w:5 cigarettes / w:6 aspirin / w:5 codeine / w:4 tramadol / w:4 oxycodone / w:4 amphetamine / w:5 sleeping pills / w:5 lighter / w:10 bandages / w:15 first aid kit / w:20 flashlight
+  items: w:3 pocket knife / w:2 hunting knife / w:4 combat knife / w:3 baton / w:1 antique sword / w:1 antique halberd / w:10 golf club / w:6 chef knife / w:3 frying pan / w:2 showerhead / w:1 diamond / w:15 processor / w:15 RAM / w:12 data cable / w:8 glasses / w:3 safety glasses / w:3 puffy coat / w:6 sneakers / w:2 boots / w:2 steel-toed boots / w:20 batteries / w:1 FN Five-Seven / w:1 KRISS Vector / w:1 FN P90 / w:1 Steyr HS .50 / w:5 MRE (meat) / w:5 MRE (vegetable) / w:3 SPAM / w:3 chicken soup / w:3 chocolate bar / w:3 cola / w:4 energy drink / w:5 cigarettes / w:6 aspirin / w:5 codeine / w:4 tramadol / w:4 oxycodone / w:4 amphetamine / w:5 sleeping pills / w:5 lighter / w:10 bandages / w:15 first aid kit / w:20 flashlight / w:2 GPS unit / w:4 radio
 done
 
 name: items_factory_worker
@@ -343,7 +343,7 @@ name: items_fire_pit
 done
 
 name: items_camping
-  items: w:2 rope / w:20 pocket knife / w:8 hunting knife / w:12 hatchet / w:5 large axe / w:2 machete / w:10 frying pan / w:10 rag / w:5 cotton hat / w:2 cap / w:5 bandana / w:3 work gloves / w:2 leather gloves / w:3 boots / w:12 backpack / w:3 batteries / w:1 crossbow / w:4 MRE (meat) / w:4 MRE (vegetable) / w:6 beans / w:6 SPAM / w:7 beef jerky / w:5 chocolate bar / w:14 water / w:2 beer / w:2 dry pasta / w:2 dry rice / w:3 dry coffee / w:3 birdseed / w:4 shovel / w:5 bandages / w:2 first aid kit / w:12 flashlight / w:10 Basic First Aid / w:10 Wild Edibles / w:12 23 Camping Tips / w:9 Orienteering and You
+  items: w:2 rope / w:20 pocket knife / w:8 hunting knife / w:12 hatchet / w:5 large axe / w:2 machete / w:10 frying pan / w:10 rag / w:5 cotton hat / w:2 cap / w:5 bandana / w:3 work gloves / w:2 leather gloves / w:3 boots / w:12 backpack / w:3 batteries / w:1 crossbow / w:4 MRE (meat) / w:4 MRE (vegetable) / w:6 beans / w:6 SPAM / w:7 beef jerky / w:5 chocolate bar / w:14 water / w:2 beer / w:2 dry pasta / w:2 dry rice / w:3 dry coffee / w:3 birdseed / w:4 shovel / w:5 bandages / w:2 first aid kit / w:12 flashlight / w:10 Basic First Aid / w:10 Wild Edibles / w:12 23 Camping Tips / w:9 Orienteering and You / w:5 tarp
 done
 
 name: items_all_books

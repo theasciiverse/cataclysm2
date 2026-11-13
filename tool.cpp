@@ -262,6 +262,10 @@ bool Tool_action::load_data(std::istream& data, std::string owner_name)
         special = new Tool_special_light;
       } else if (special_name == "heal") {
         special = new Tool_special_heal;
+      } else if (special_name == "radio") {
+        special = new Tool_special_radio;
+      } else if (special_name == "gps") {
+        special = new Tool_special_gps;
       } else {
         debugmsg("Unknown Tool_special '%s' (%s)", special_name.c_str(),
                  owner_name.c_str());

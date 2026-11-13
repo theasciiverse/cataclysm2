@@ -622,6 +622,10 @@ void Player::take_damage_no_armor(Damage_type damtype, int damage,
   if (damage > 0 && !reason.empty()) {
     last_damage = reason;   // for the death screen
   }
+  if (damage > 0 && has_activity() && reason != "starvation" &&
+      reason != "thirst") {
+    GAME.interrupt_activity("!  You're hurt!");
+  }
   current_hp[ convert_to_HP(part) ] -= damage;
   int min_pain = damage / 2, max_pain = damage;
   if (has_trait(TRAIT_PAIN_RESISTANT)) {

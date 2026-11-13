@@ -246,6 +246,8 @@ type: beach_shipwreck
 base_terrain: beach sand
 item_group: 80 s = items_shipwreck
 all_item_group: . = items_static_shipwreck
+# The wreck itself: examine it to repair it (Asciiverse, 2026).
+tile: W = wrecked boat
 map:
 sssssssssssssssssssssssss
 sssssssssssssssssssssssss
@@ -258,9 +260,9 @@ ssss.................ssss
 ssss.................ssss
 ssss.................ssss
 ssss.................ssss
-ssss.................ssss
-ssss.................ssss
-ssss.................ssss
+ssss.......WWWW......ssss
+ssss......WWWWWW.....ssss
+ssss.......WWWW......ssss
 ssss.................ssss
 ssss.................ssss
 ssss.................ssss

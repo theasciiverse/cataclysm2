@@ -14,6 +14,17 @@
 // Identical messages within MESSAGE_GAP turns of each other are combined
 #define MESSAGE_GAP 3
 
+// The wreck of the player's boat, and what has been done to it (escape.cpp)
+struct Boat_project
+{
+  Boat_project() { hull = false; sail = false; gps = false;
+                   rations = 0; drinks = 0; }
+  bool hull, sail, gps;
+  int rations, drinks;
+};
+
+std::string days_text(int days);   // "3 days" (escape.cpp)
+
 struct Game_message
 {
   std::string text;
@@ -49,6 +60,18 @@ public:
   bool load_game(std::string world_name);
   std::string pick_saved_game();  // "" if cancelled
   bool player_is_dead();
+/**** Survival - survival.cpp ****/
+  bool danger_near();
+  void interrupt_activity(std::string why = ".");
+  void start_sleeping();
+/**** The way off the island - escape.cpp ****/
+  bool boat_ready();
+  void boat_interface();
+  void finish_boat_work(int stage);
+  void listen_radio();
+  void read_gps();
+  void victory();
+  Boat_project boat;
   void player_death();
 
 /**** Engine - Main loop functions ****/

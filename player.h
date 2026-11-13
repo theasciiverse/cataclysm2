@@ -14,6 +14,8 @@ class Player : public Entity
 {
 public:
   virtual std::string save_data();   // savegame.cpp
+  bool is_sleeping();                 // survival.cpp
+  void body_upkeep();                 // once a turn: sleep, healing, starving
   virtual bool load_data(std::istream& data);
   Player();
   ~Player();

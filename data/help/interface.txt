@@ -1,0 +1,36 @@
+<c=white>The keys<c=/>
+
+  <c=magenta>hjklyubn<c=/> or the numpad   move (and attack by moving into a monster)
+  <c=magenta>.<c=/>                        wait a turn
+  <c=magenta>< ><c=/>                      go up or down stairs and ladders
+  <c=magenta>,<c=/>                        pick up what is here
+  <c=magenta>x<c=/>                        examine something next to you
+  <c=magenta>X<c=/> or <c=magenta>;<c=/>                   look around
+  <c=magenta>o<c=/> / <c=magenta>C<c=/>                    open / close
+  <c=magenta>s<c=/>                        smash
+  <c=magenta>g<c=/>                        grab furniture and drag it
+  <c=magenta>i<c=/>                        inventory
+  <c=magenta>d<c=/>                        drop
+  <c=magenta>w<c=/> / <c=magenta>W<c=/> / <c=magenta>T<c=/>                wield / wear / take off
+  <c=magenta>a<c=/>                        apply a tool (the radio, the GPS unit, a flashlight)
+  <c=magenta>e<c=/>                        eat or drink
+  <c=magenta>R<c=/>                        read
+  <c=magenta>r<c=/> / <c=magenta>(<c=/>                    reload what you hold / reload anything
+  <c=magenta>t<c=/> / <c=magenta>f<c=/> / <c=magenta>F<c=/>                throw / fire / change fire mode
+  <c=magenta>$<c=/>                        sleep
+  <c=magenta>:<c=/> or <c=magenta>M<c=/>                   the island map
+  <c=magenta>@<c=/> / <c=magenta>K<c=/>                    your status / your skills
+  <c=magenta>- +<c=/>                      scroll the messages
+  <c=magenta>?<c=/>                        this help
+  <c=magenta>S<c=/>                        save
+  <c=magenta>Q<c=/>                        save and quit
+
+<c=white>Staying alive<c=/>
+
+You get hungry and thirsty quickly, and you need to sleep every night (<c=magenta>$<c=/>).  You heal slowly on your own, faster while asleep, and not at all when starving or parched.  Go without water for two days, or food for six, and your body starts to fail.  Sleeping, reading and other long tasks stop when danger comes near or you are hurt.
+
+The game saves itself every two hours of game time, and when you quit.  Death is permanent: it ends the game and deletes the save.
+
+<c=white>Getting off the island<c=/>
+
+Listen to the radio from your wreck.  The wreck itself is on the beach where you woke: examine it (<c=magenta>x<c=/>) to see what it needs to sail again.  Materials count if you carry them or they lie within two steps of you.

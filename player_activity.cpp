@@ -17,6 +17,8 @@ std::string get_activity_name(Player_activity_type type)
     case PLAYER_ACTIVITY_WAIT:    return "wait";
     case PLAYER_ACTIVITY_RELOAD:  return "reload";
     case PLAYER_ACTIVITY_READ:    return "read";
+    case PLAYER_ACTIVITY_SLEEP:   return "sleep";
+    case PLAYER_ACTIVITY_BOAT_WORK: return "work on the boat";
     case PLAYER_ACTIVITY_MAX:     return "BUG - PLAYER_ACTIVITY_MAX";
 
     default:                      return "BUG - Unnamed Player_activity_type";
@@ -31,6 +33,8 @@ std::string get_activity_participle(Player_activity_type type)
     case PLAYER_ACTIVITY_WAIT:    return "waiting";
     case PLAYER_ACTIVITY_RELOAD:  return "reloading";
     case PLAYER_ACTIVITY_READ:    return "reading";
+    case PLAYER_ACTIVITY_SLEEP:   return "sleeping";
+    case PLAYER_ACTIVITY_BOAT_WORK: return "working on the boat";
     case PLAYER_ACTIVITY_MAX:     return "BUG - PLAYER_ACTIVITY_MAX";
 
     default:                   return "BUG - Unparticiple Player_activity_type";

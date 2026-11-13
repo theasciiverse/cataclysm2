@@ -147,6 +147,13 @@ lose it?", worldmap->get_name().c_str())) {
   last_target = -1;
   new_messages = 0;
   game_over = false;
+  boat = Boat_project();
+// A first-day guide (Asciiverse, 2026): Whales' early game, in a few lines.
+  add_msg("<c=white>You wake on a beach, beside the wreck of your boat.<c=/>");
+  add_msg("Find water, food and shelter before night.  Your things lie \
+scattered around the wreck: pick them up with <c=yellow>,<c=/>.");
+  add_msg("Your radio survived the storm: <c=yellow>a<c=/>pply it and listen.  \
+<c=yellow>$<c=/> sleeps, <c=yellow>?<c=/> is help, <c=yellow>S<c=/> saves.");
   return true;
 }
 
@@ -313,6 +320,7 @@ bool Game::main_loop()
   player->gain_action_points();
 // Set all values, incur hunger/thirst, etc.
   player->start_turn();
+  player->body_upkeep();
   while (player->action_points > 0) {
 // Handle the player's activity (e.g. reloading, crafting, etc)
     handle_player_activity();
@@ -476,6 +484,10 @@ there.<c=/>", map->get_name(player->pos).c_str());
         add_msg("Invalid direction.");
       } else {
         Tripoint examine = player->pos + dir;
+        if (map->get_name(examine) == "wrecked boat") {
+          boat_interface();
+          break;
+        }
 // Can't pick up items if we're sealed
         if (map->has_flag(TF_SEALED, examine)) {
           add_msg("<c=dkgray>That %s is sealed; you cannot retrieve items \
@@ -763,6 +775,15 @@ there.<c=/>", map->get_name(examine).c_str());
       }
       break;
 
+    case IACTION_SLEEP:
+      start_sleeping();
+      break;
+
+    case IACTION_HELP:
+      help_screen();
+      draw_all();
+      break;
+
     case IACTION_SAVE:
       if (save_game()) {
         add_msg("Game saved.");
@@ -842,6 +863,14 @@ void Game::handle_player_activity()
     return;
   }
   Player_activity *act = &(player->activity);
+  if (danger_near()) {
+    interrupt_activity("!  Something is near!");
+    return;
+  }
+  if (player->is_sleeping() && player->fatigue <= 0) {
+    complete_player_activity();
+    return;
+  }
   if (act->duration <= player->action_points) {
     player->action_points -= act->duration;
     complete_player_activity();
@@ -869,6 +898,15 @@ void Game::complete_player_activity()
       add_msg("You reload your %s.", reloaded->get_name().c_str());
       reloaded->reload(player, act->secondary_item_uid);
     } break;
+
+    case PLAYER_ACTIVITY_BOAT_WORK:
+      finish_boat_work(act->primary_item_uid);
+      break;
+
+    case PLAYER_ACTIVITY_SLEEP:
+      add_msg(player->fatigue <= 0 ? "You wake up feeling rested." :
+                                     "You wake up.");
+      break;
 
     case PLAYER_ACTIVITY_READ: {
       Item* read = player->ref_item_uid(act->primary_item_uid);
@@ -1500,7 +1538,7 @@ void Game::update_hud()
 //debugmsg("update_hud(); mes %d, new %d", messages.size(), new_messages);
   print_messages();
 // Update date
-  i_hud.set_data("text_date", time.get_text());
+  i_hud.set_data("text_date", time.get_text(true));  // 24-hour: " PM" was cut off
 // Update location description
   Submap* sm = map->get_center_submap();
 // TODO: This prints the DATA name of the World_ter; we want the DISPLAY name

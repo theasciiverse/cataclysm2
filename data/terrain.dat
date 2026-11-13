@@ -1072,3 +1072,10 @@ name: fire pit
     result: hole
   done
 done
+
+# The wreck of the player's boat on the starting beach (Asciiverse, 2026).
+# Examine it to repair it and sail off the island.
+name: wrecked boat
+  glyph: & brown black
+  movecost: 0
+done

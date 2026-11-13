@@ -26,6 +26,8 @@ enum Tool_special_type
   TOOL_SPECIAL_EXPLOSION, // Make an explosion
   TOOL_SPECIAL_LIGHT,     // Provide some light
   TOOL_SPECIAL_HEAL,      // Heal some damage
+  TOOL_SPECIAL_RADIO,     // Listen to the radio (escape.cpp)
+  TOOL_SPECIAL_GPS,       // Read a GPS unit (escape.cpp)
   TOOL_SPECIAL_MAX
 };
 
@@ -89,6 +91,23 @@ struct Tool_special_heal : public Tool_special
 // max_amount.
   Skill_type skill;
   int skill_min, skill_max;
+};
+
+// Asciiverse, 2026: the radio and the GPS unit, both in escape.cpp.
+struct Tool_special_radio : public Tool_special
+{
+  virtual ~Tool_special_radio(){}
+  virtual Tool_special_type get_type() { return TOOL_SPECIAL_RADIO; }
+  virtual bool load_data(std::istream& data, std::string owner_name);
+  virtual bool effect(Entity* user);
+};
+
+struct Tool_special_gps : public Tool_special
+{
+  virtual ~Tool_special_gps(){}
+  virtual Tool_special_type get_type() { return TOOL_SPECIAL_GPS; }
+  virtual bool load_data(std::istream& data, std::string owner_name);
+  virtual bool effect(Entity* user);
 };
 
 struct Tool_action

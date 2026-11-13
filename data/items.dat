@@ -2981,6 +2981,51 @@ tool
   done
 done
 
+tool
+  name: radio
+  description:
+    A battered hand-cranked radio from the wreck of your boat, running on
+    batteries now.  Apply it to listen to whatever is still broadcasting.
+  done
+  glyph: ; dkgray black
+  weight:  6
+  volume: 12
+
+  default_charges: 50
+  max_charges: 100
+  fuel: batteries
+
+  applied:
+    special: radio
+    done
+    ap_cost: 200
+    charge_cost: 1
+  done
+done
+
+tool
+  name: GPS unit
+  description:
+    A handheld satellite navigator.  The satellites fell silent long ago, but
+    the ground relays that backed them up may still be out there.  Runs on
+    batteries.
+  done
+  glyph: ; ltgreen black
+  weight:  3
+  volume:  6
+
+  default_charges: 20
+  max_charges: 100
+  fuel: batteries
+
+  applied:
+    special: gps
+    done
+    ap_cost: 100
+    charge_cost: 1
+  done
+done
+
 # END Tools
 
 # Books
