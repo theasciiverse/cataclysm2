@@ -1079,3 +1079,36 @@ name: wrecked boat
   glyph: & brown black
   movecost: 0
 done
+
+# The Lab, its Substation and the Power Plant (Asciiverse, 2026, after
+# Whales' notes in docs/notes.txt).  Examine the panels and the door.
+name: plant control panel
+  glyph: & ltred black
+  movecost: 0
+done
+
+name: breaker panel
+  glyph: & yellow black
+  movecost: 0
+done
+
+name: lab blast door
+  glyph: + ltred black
+  movecost: 0
+  flags: opaque
+  signal: unlock
+    result: open blast door
+    success_message: The blast door grinds open.
+  done
+done
+
+name: open blast door
+  glyph: ' ltred black
+  movecost: 100
+  flags: floor
+done
+
+name: lab core
+  glyph: & ltcyan black
+  movecost: 0
+done

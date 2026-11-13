@@ -25,6 +25,13 @@ struct Boat_project
 
 std::string days_text(int days);   // "3 days" (escape.cpp)
 
+// The Lab and what powers it (lab.cpp)
+struct Lab_state
+{
+  Lab_state() { plant_on = false; substation_on = false; open = false; }
+  bool plant_on, substation_on, open;
+};
+
 struct Game_message
 {
   std::string text;
@@ -72,6 +79,11 @@ public:
   void read_gps();
   void victory();
   Boat_project boat;
+/**** The Lab - lab.cpp ****/
+  bool examine_lab_machinery(Tripoint pos);
+  void finish_lab_work(int stage);
+  void lab_victory();
+  Lab_state lab;
   void player_death();
 
 /**** Engine - Main loop functions ****/

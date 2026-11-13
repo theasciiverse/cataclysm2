@@ -495,6 +495,18 @@ void Game::listen_radio()
           "welcome.  Craft with a working GPS receiver can lock onto this " <<
           "relay and follow it to the harbour mouth.  Repeat: this is the " <<
           "Saltcove coastal relay...  *crackle*<c=/>" << std::endl << std::endl;
+  text << "<c=ltgray>Further down the dial, faint, a recorded voice: " <<
+          "\"...Central Research island facility.  Main power lost.  " <<
+          "Containment at the core cannot be guaranteed.  Staff holding " <<
+          "passcards, restore power from the plant and the Lab substation " <<
+          "and secure the core...\"<c=/>" << std::endl << std::endl;
+  if (lab.open) {
+    text << "The Lab stands open at the island's heart.  Its core is " <<
+            "where the monsters come from." << std::endl << std::endl;
+  } else {
+    text << "A lab at the island's heart, with a door that wants power and " <<
+            "a passcard." << std::endl << std::endl;
+  }
   if (boat_ready()) {
     text << "Your boat is ready on the beach.  All that's left is to sail.";
   } else {

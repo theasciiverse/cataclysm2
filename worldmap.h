@@ -41,6 +41,7 @@ public:
 
   void generate();
   void place_monsters();
+  void place_lab();   // lab.cpp
   void add_bonus(int x, int y, bool debug = false);
   void set_terrain(int x, int y, std::string terrain_name);
 

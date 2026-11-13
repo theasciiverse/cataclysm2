@@ -656,12 +656,17 @@ debugmsg("A*'d over Z-level");
   }
 
   Path ret;
-  if (open_points.empty()) {
+  if (!done || open_points.empty()) {
     return ret;
   }
   Tripoint cur = end;
   ret.add_step(cur, map.get_cost(cur));
-  while (parent[cur.x][cur.y][cur.z] != start) {
+// Walk back to the start.  When start == end, or a chain is broken, the
+// parent is (-1, -1, -1); indexing with it read outside the arrays and
+// crashed about one world generation in ten (found with AddressSanitizer).
+  int guard = x_size * y_size * z_size;
+  while (guard-- > 0 && in_bounds(parent[cur.x][cur.y][cur.z]) &&
+         parent[cur.x][cur.y][cur.z] != start) {
     cur = parent[cur.x][cur.y][cur.z];
     ret.add_step(cur, map.get_cost(cur));
   }

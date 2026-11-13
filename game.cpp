@@ -148,6 +148,7 @@ lose it?", worldmap->get_name().c_str())) {
   new_messages = 0;
   game_over = false;
   boat = Boat_project();
+  lab = Lab_state();
 // A first-day guide (Asciiverse, 2026): Whales' early game, in a few lines.
   add_msg("<c=white>You wake on a beach, beside the wreck of your boat.<c=/>");
   add_msg("Find water, food and shelter before night.  Your things lie \
@@ -484,6 +485,9 @@ there.<c=/>", map->get_name(player->pos).c_str());
         add_msg("Invalid direction.");
       } else {
         Tripoint examine = player->pos + dir;
+        if (examine_lab_machinery(examine)) {
+          break;
+        }
         if (map->get_name(examine) == "wrecked boat") {
           boat_interface();
           break;
@@ -900,7 +904,11 @@ void Game::complete_player_activity()
     } break;
 
     case PLAYER_ACTIVITY_BOAT_WORK:
-      finish_boat_work(act->primary_item_uid);
+      if (act->primary_item_uid >= 10) {
+        finish_lab_work(act->primary_item_uid);
+      } else {
+        finish_boat_work(act->primary_item_uid);
+      }
       break;
 
     case PLAYER_ACTIVITY_SLEEP:
@@ -1681,6 +1689,25 @@ void Game::debug_command()
       add_msg("Items cleared.  Note; this may cause a crash if there were \
 active items!");
       break;
+
+    case DEBUG_ACTION_LAB_TEST: {
+// The Lab's machinery around the player, to test it (lab.cpp)
+      const char* ters[4] = { "plant control panel", "breaker panel",
+                              "lab blast door", "lab core" };
+      Tripoint at[4] = { player->pos + Tripoint(1, 0, 0),
+                         player->pos + Tripoint(-1, 0, 0),
+                         player->pos + Tripoint(0, -1, 0),
+                         player->pos + Tripoint(0, 1, 0) };
+      for (int i = 0; i < 4; i++) {
+        Tile* tile = map->get_tile(at[i]);
+        if (tile) {
+          tile->terrain = TERRAIN.lookup_name(ters[i]);
+        }
+      }
+      player->inventory.push_back( Item(ITEM_TYPES.lookup_name("wrench")) );
+      player->inventory.push_back( Item(ITEM_TYPES.lookup_name("Lab passcard")) );
+      add_msg("Panel east, breaker west, door north, core south.");
+    } break;
 
     case DEBUG_ACTION_KILL_PLAYER:
       if (query_yn("Kill yourself (testing the death screen)?")) {

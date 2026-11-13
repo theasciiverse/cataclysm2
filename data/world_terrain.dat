@@ -328,3 +328,20 @@ Name: campsite
   Spread_cost: 10
   Spread: 1d3 - 1
 Done
+
+# Asciiverse, 2026: the Lab and the infrastructure that powers it, after
+# Whales' notes (docs/notes.txt).  Placed by Worldmap::place_lab().
+Name: lab
+  Glyph: L ltcyan black
+  Road_cost: 500
+Done
+
+Name: lab substation
+  Glyph: s yellow black
+  Road_cost: 500
+Done
+
+Name: power plant
+  Glyph: P ltred black
+  Road_cost: 500
+Done

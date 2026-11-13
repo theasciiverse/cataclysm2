@@ -1,0 +1,131 @@
+### The Lab, the Lab Substation and the Power Plant (Asciiverse, 2026)
+#
+# After Whales' notes (docs/notes.txt): the Lab sits at the centre of the
+# island; it opens when the Power Plant runs, its Substation passes the
+# power on, and a passcard is shown at the blast door.  The panels, the door
+# and the core are worked by examining them (escape.cpp, lab.cpp).
+
+name: std_lab_asciiverse
+type: lab
+base_terrain: concrete floor
+tile: , = pavement
+tile: # = stone wall
+tile: . = floor
+tile: D = lab blast door
+tile: C = lab core
+tile: r = server rack
+tile: m = machinery
+tile: ' = closed door
+tile: " = bulletproof glass
+items: 30 . = w:3 first aid kit / w:3 bandages / w:2 batteries / w:1 flashlight / w:2 data cable / w:2 processor
+items: 60 r = w:3 processor / w:3 RAM / w:3 data cable
+map:
+,,,,,,,,,,,,,,,,,,,,,,,,,
+,#######################,
+,#rrrr...........rrrr..#,
+,#.......mmmmm.........#,
+,#.......mCCCm.........#,
+,#.......mm.mm.........#,
+,#.....................#,
+,####"####'''####"######,
+,#.....#.........#.....#,
+,#.r...#.........#...r.#,
+,#.r...'.........'...r.#,
+,#.....#.........#.....#,
+,####'###.......###'####,
+,#.......#.....#.......#,
+,#.......#.....#.......#,
+,#..m....'.....'....m..#,
+,#.......#.....#.......#,
+,#########.....#########,
+,#.....................#,
+,#.....................#,
+,#####################D#,
+,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,
+endmap
+done
+
+name: std_lab_substation_asciiverse
+type: lab substation
+base_terrain: w:3 grass / w:1 dirt
+tile: F = chain-link fence
+tile: m = machinery
+tile: B = breaker panel
+tile: c = concrete floor
+tile: ' = open broken door
+map:
+.........................
+.........................
+.........................
+.....FFFFFFFFFFFFFFF.....
+.....Fcccccccccccccc.....
+.....Fcmmmcmmmcmmmcc.....
+.....Fcmmmcmmmcmmmcc.....
+.....Fccccccccccccccc....
+.....FcmmmcmmmcmmmccF....
+.....FcmmmcmmmcmmmccF....
+.....FccccccccccccccF....
+.....FccccccBcccccccF....
+.....FFFFFFF'FFFFFFFF....
+.........................
+.........................
+.........................
+.........................
+.........................
+.........................
+.........................
+.........................
+.........................
+.........................
+.........................
+.........................
+endmap
+done
+
+name: std_power_plant_asciiverse
+type: power plant
+base_terrain: w:3 grass / w:1 dirt
+tile: F = chain-link fence
+tile: , = pavement
+tile: # = stone wall
+tile: . = concrete floor
+tile: m = machinery
+tile: P = plant control panel
+tile: ' = closed door
+tile: " = window
+tile: o = floor
+tile: d = floor
+num_items: o = w:1 c: 1; Lab passcard
+items: 40 d = w:4 batteries / w:2 flashlight / w:2 first aid kit / w:3 wrench / w:2 hammer
+items: 30 m = w:3 nails / w:2 metal pole / w:2 tarp / w:2 rope
+map:
+FFFFFFFFFFFFFFFFFFFFFFFFF
+F,,,,,,,,,,,,,,,,,,,,,,,F
+F,#####################,F
+F,#...................#,F
+F,#.mmm.mmm.mmm.mmm...#,F
+F,#.mmm.mmm.mmm.mmm...#,F
+F,#...................#,F
+F,#.mmm.mmm.mmm.mmm...#,F
+F,#.mmm.mmm.mmm.mmm...#,F
+F,#...................#,F
+F,#...........P.......#,F
+F,#########'###########,F
+F,#ddd#......#.......d#,F
+F,#ddo'......'.......d#,F
+F,#ddd#......#.......d#,F
+F,###"###''###"#######,,F
+F,,,,,,,,,,,,,,,,,,,,,,,F
+F,,,,,,,,,,,,,,,,,,,,,,,F
+FFFFFFFFFFF,,,FFFFFFFFFFF
+.........................
+.........................
+.........................
+.........................
+.........................
+.........................
+endmap
+done

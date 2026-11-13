@@ -44,9 +44,15 @@ Whales' "bad win": a seaworthy boat and a working GPS.
 
 ## 0.5.0: the Lab
 
-- [ ] The Lab at the centre of the island, the Power Plant, Substations,
-      four passcards and the Control Station as world content
-- [ ] Opening the Lab is the good ending while no faction contests it
+- [x] The Lab at the centre of the island (`L` on the island map), its
+      Substation beside it (`s`), the Power Plant in one of the island's
+      corners (`P`), with aliens in the Lab and zombies at the plant
+- [x] Restart the plant (a wrench, two hours), close the Substation's
+      breakers, show the passcard from the plant's office at the blast door
+- [x] The Lab's core: shutting it down closes the seam the monsters come
+      through, the good ending while no faction contests it
+- [ ] The other corner Substations, the other three passcards (landing
+      strip, silo, sea) and the Control Station, as in Whales' notes
 
 ## Toward 1.0.0: people
 

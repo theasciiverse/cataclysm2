@@ -163,3 +163,20 @@ two have commits of their own (Wad67, 2017, one UI fix-up; mytinylab,
 - The HUD clock is in 24-hour time: " PM" did not fit and was cut off.
 - Fixes: `Entity::summons_used` and `parent_uid` were never set; a
   precedence slip in `Entity::remove_item()` compared a bool with the uid.
+
+### 0.5.0: the Lab
+
+- **World generation** places the Lab at the centre of the main island,
+  its Substation beside it and the Power Plant in one corner
+  (`Worldmap::place_lab()`, `lab.cpp`), with new world terrains `lab`,
+  `lab substation` and `power plant` (added at the end of
+  `world_terrain.dat` so older worlds keep their terrain ids) and their
+  maps in `data/mapgen/lab.map`.
+- **Machinery** (`lab.cpp`): new terrains `plant control panel`,
+  `breaker panel`, `lab blast door` (opened by a signal no tool sends),
+  `open blast door` and `lab core`, worked by examining them; a new item,
+  `Lab passcard`, in the plant's office. The state is saved. The core
+  ends the game with the good ending.
+- The radio also picks up the Lab's recorded message.
+- `--test` debug commands: `L` puts the machinery around the player with a
+  wrench and a passcard, `k` kills the player.

@@ -1,8 +1,8 @@
 """Records Cataclysm II's catalog preview (hub/RECORDING.md): the first
-screen with its "early alpha" notice, a Survivalist made in a few keys,
-then the shipwreck beach. The driver wields the hatchet, looks at the
-world map for the nearest town with zombies (drawn on red), walks there
-and fights what comes. Usage, from the repo root after asciiverse/build.sh
+screen, a Survivalist made in a few keys, then the shipwreck beach. The
+driver wields the hatchet, walks to the wreck of the boat and examines it
+(what it needs to sail again), looks at the world map for the nearest town
+with zombies (drawn on red), walks there and fights what comes. Usage, from the repo root after asciiverse/build.sh
 and asciiverse/package.sh <target>, with pyte installed:
 
     python3 asciiverse/record/cataclysm2.py
@@ -89,11 +89,35 @@ def bfs_step(r, goal_dir, avoid):
     return (p[0] - ME[0], p[1] - ME[1])
 
 
+def visit_wreck(r):
+    """Walk next to the wreck (drawn &) and examine it: the boat's
+    checklist, the way off the island."""
+    for _ in range(25):
+        grid = grid_of(r)
+        wreck = [(x, y) for y in range(MAPH) for x in range(MAPW)
+                 if grid[y][x] == "&"]
+        if not wreck:
+            return
+        for (dx, dy), k in DIRS.items():
+            if grid[ME[1] + dy][ME[0] + dx] == "&":
+                r.key("x", 0.4)
+                r.key(k, 3.5)           # the checklist, on screen a while
+                r.key("\x1b", 0.6)
+                return
+        wx, wy = min(wreck, key=lambda p: max(abs(p[0] - ME[0]), abs(p[1] - ME[1])))
+        goal = (wx - ME[0], wy - ME[1])
+        n = max(abs(goal[0]), abs(goal[1]), 1)
+        step = bfs_step(r, (goal[0] / n, goal[1] / n), set())
+        if step is None:
+            return
+        r.key(DIRS[step], 0.2)
+
+
 def take(seed):
     random.seed(seed)
     r = Rec("cataclysm2", "Cataclysm II")
     r.wait_for("New Character", 8)
-    r.pump(3.0)                     # the first screen: an early alpha
+    r.pump(3.0)                     # the first screen
     r.key("N", 0.8)                 # stats: two points each to Str and Dex
     for k in (RIGHT, RIGHT, DOWN, RIGHT, RIGHT):
         r.key(k, 0.15)
@@ -109,6 +133,7 @@ def take(seed):
     r.pump(1.5)
     r.key("w", 0.8)                 # wield the hatchet
     r.key("f", 1.2)
+    visit_wreck(r)
     r.key(":", 1.0)                 # the world map
     off = town_offset(r)
     r.pump(1.5)
@@ -155,7 +180,7 @@ def take(seed):
             avoid.clear()
             target[0] -= step[0]
             target[1] -= step[1]
-    r.key("Q", 0.8)                 # quit: the game asks first
+    r.key("Q", 0.8)                 # save and quit: the game asks first
     r.key("y", 1.5)
     r.finish(b"", grace=4.0)
 

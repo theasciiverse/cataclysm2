@@ -495,6 +495,8 @@ void Worldmap::generate()
   }
 // Finally, place mosnters!
   place_monsters();
+// The Lab, its Substation and the Power Plant (lab.cpp)
+  place_lab();
 }
 
 void Worldmap::place_monsters()

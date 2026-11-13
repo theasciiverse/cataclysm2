@@ -4,6 +4,19 @@
 
 # Pure weapons / vanilla items
 
+# The Lab's passcard (Asciiverse, 2026); one lies in the Power Plant's office.
+weapon
+  name: Lab passcard
+  description:
+    A laminated keycard on a lanyard, its chip still warm with charge.  The
+    words "CENTRAL RESEARCH - ALL LEVELS" are printed across it.  The reader
+    beside the Lab's blast door would know it.
+  done
+  glyph: = ltcyan black
+  weight: 0
+  volume: 0
+done
+
 weapon
   name: rock
   description:

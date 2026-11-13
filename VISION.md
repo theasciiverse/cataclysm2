@@ -100,3 +100,16 @@ are recorded below as they are made.
   nails, a hammer), a mast and sail (2 tarps, 2 ropes, a metal pole), a GPS
   unit, and 8 rations aboard (4 to drink). Victory deletes the save, like
   death.
+- **The Lab, cut down to one player** (2026-11-13): Whales' notes have
+  five Substations, a Power Plant replacing one of them, four passcards in
+  set kinds of places, a Control Station, and factions holding the Lab for
+  a countdown. Without factions yet, ours has the Lab at the island's centre
+  (`lab.cpp`, `data/mapgen/lab.map`), one Substation beside it, the Power
+  Plant at the corner of the island furthest in a random diagonal, and one
+  passcard, in the plant's office. Powering the Lab and showing the
+  passcard opens the blast door; at the core the player can close "the
+  seam" the monsters come through: the Naturalists' victory in the notes
+  ("the connection beyond has been severed"), as the player's own good
+  ending. The aliens in the Lab are the Chiratia, the game's existing
+  otherworldly genus. The radio carries a recorded message from the Lab's
+  owners, "Central Research" (our name).
