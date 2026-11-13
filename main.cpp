@@ -8,6 +8,12 @@
 #include <getopt.h>
 #include <unistd.h> // Required for getopt??
 #include <string>
+#include <csignal>
+
+// Asciiverse, 2026: a closed terminal (SIGHUP) or a polite kill (SIGTERM)
+// saves the game instead of losing everything since the last autosave.
+volatile sig_atomic_t HANGUP_REQUESTED = 0;
+static void request_hangup(int) { HANGUP_REQUESTED = 1; }
 
 //#include "stringfunc.h"
 
@@ -40,6 +46,11 @@ int main(int argc, char* argv[])
   }
 
   load_global_data(); // See globals.cpp
+
+#ifndef _WIN32
+  signal(SIGHUP, request_hangup);
+#endif
+  signal(SIGTERM, request_hangup);
 
 // See game.cpp for setup() and starting_menu()
   if (!GAME.setup_ui() || !GAME.starting_menu()) {

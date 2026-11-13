@@ -206,3 +206,6 @@ two have commits of their own (Wad67, 2017, one UI fix-up; mytinylab,
   by 120) or to fill the empty bottles and cans you carry; salt water says
   why not. There was no water on the island but bottled water, so thirst
   killed every long game.
+- **A closed terminal saves the game**: SIGHUP (the terminal went away) and
+  SIGTERM now save before the game ends, instead of losing everything since
+  the last autosave (`main.cpp`, checked once per player input).

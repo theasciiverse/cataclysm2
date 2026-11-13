@@ -6,6 +6,8 @@
 #include "pathfind.h"
 #include "files.h"      // For CUSS_DIR
 #include "help.h"
+#include <csignal>
+extern volatile sig_atomic_t HANGUP_REQUESTED;   // main.cpp
 #include <stdarg.h>
 #include <math.h>
 #include <sstream>
@@ -335,6 +337,11 @@ bool Game::main_loop()
     }
 
 // The player doesn't get to give input if they have an active activity.
+    if (HANGUP_REQUESTED) {
+      save_game();
+      game_over = true;
+      return false;
+    }
     if (!player->activity.is_active()) {
       long ch = input();
 // Fetch the action bound to whatever key we pressed...
