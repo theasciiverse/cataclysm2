@@ -71,6 +71,7 @@ public:
   bool danger_near();
   void interrupt_activity(std::string why = ".");
   void start_sleeping();
+  bool water_interaction(Tripoint pos);
 /**** The way off the island - escape.cpp ****/
   bool boat_ready();
   void boat_interface();

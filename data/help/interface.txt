@@ -27,7 +27,7 @@
 
 <c=white>Staying alive<c=/>
 
-You get hungry and thirsty quickly, and you need to sleep every night (<c=magenta>$<c=/>).  You heal slowly on your own, faster while asleep, and not at all when starving or parched.  Go without water for two days, or food for six, and your body starts to fail.  Sleeping, reading and other long tasks stop when danger comes near or you are hurt.
+You get hungry and thirsty quickly (examine a pond or river to drink from it or fill your bottles), and you need to sleep every night (<c=magenta>$<c=/>).  You heal slowly on your own, faster while asleep, and not at all when starving or parched.  Go without water for two days, or food for six, and your body starts to fail.  Sleeping, reading and other long tasks stop when danger comes near or you are hurt.
 
 The game saves itself every two hours of game time, and when you quit.  Death is permanent: it ends the game and deletes the save.
 

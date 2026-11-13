@@ -487,6 +487,9 @@ there.<c=/>", map->get_name(player->pos).c_str());
         add_msg("Invalid direction.");
       } else {
         Tripoint examine = player->pos + dir;
+        if (water_interaction(examine)) {
+          break;
+        }
         if (examine_lab_machinery(examine)) {
           break;
         }
@@ -1768,8 +1771,13 @@ active items!");
       if (counter) {
         counter->terrain = TERRAIN.lookup_name("trade counter");
       }
+      Tile* pond = map->get_tile(player->pos + Tripoint(-1, 1, 0));
+      if (pond) {
+        pond->terrain = TERRAIN.lookup_name("shallow water");
+      }
+      player->inventory.push_back( Item(ITEM_TYPES.lookup_name("plastic bottle")) );
       add_msg("Panel east, breaker west, door north, core south, trade \
-counter south-east.");
+counter south-east, water south-west.");
     } break;
 
     case DEBUG_ACTION_KILL_PLAYER:

@@ -25,6 +25,8 @@ Whales' early game (https://whalesdev.tumblr.com/post/74991567472).
       first-day guide in the messages
 - [x] Sleep (`$`): there was no way to sleep; fatigue only grew
 - [x] Natural healing, faster asleep; starvation and thirst that kill
+- [x] Drink from fresh water and fill empty bottles there (examine it):
+      there was no water but bottled water (0.6.0)
 - [x] Long tasks (sleeping, reading, reloading) stop when danger comes near
       or you are hurt: nothing interrupted them
 - [ ] More crashes and soft-locks found by playing, fixed (ongoing)

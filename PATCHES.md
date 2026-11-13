@@ -202,3 +202,7 @@ two have commits of their own (Wad67, 2017, one UI fix-up; mytinylab,
   `monster_genera.dat` and `monsters.dat`, and two raider camps per island
   (world terrain `raider camp`, its map in `data/mapgen/camp.map`, placed
   with the farming camps), with 4 to 6 raiders each and their loot.
+- **Fresh water**: examining a fresh-water tile offers a drink (thirst down
+  by 120) or to fill the empty bottles and cans you carry; salt water says
+  why not. There was no water on the island but bottled water, so thirst
+  killed every long game.

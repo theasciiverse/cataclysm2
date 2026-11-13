@@ -12,6 +12,7 @@
 #include "geometry.h"
 #include "window.h"
 #include "rng.h"
+#include <sstream>
 
 // Hunger and thirst past which the body starts to fail (hunger and thirst
 // rise by one every six minutes): about six days without food, two without
@@ -116,4 +117,62 @@ void Game::start_sleeping()
 // The activity ends when we are rested (handle_player_activity()), or
 // after twelve hours at most.
   player->set_activity(PLAYER_ACTIVITY_SLEEP, HOURS(12) * 100);
+}
+
+// Drinking from fresh water, and filling empty bottles there (Asciiverse,
+// 2026).  Without this the only water on the island was bottled, and the
+// thirst clock had no answer once the bottles ran out.
+bool Game::water_interaction(Tripoint pos)
+{
+  std::string ter = map->get_name(pos);
+  bool fresh = (ter == "shallow water" || ter == "deep water");
+  bool salt  = (ter == "shallow salt water" || ter == "deep salt water");
+  if (!fresh && !salt) {
+    return false;
+  }
+  if (salt) {
+    popup("Salt water.  Drinking it would only make you thirstier.");
+    return true;
+  }
+// Empty containers we carry that hold liquids.
+  std::vector<int> empties;
+  for (int i = 0; i < player->inventory.size(); i++) {
+    Item& it = player->inventory[i];
+    if (it.is_real() && it.get_item_class() == ITEM_CLASS_CONTAINER &&
+        it.contents.empty() && it.get_type()->name != "paper box" &&
+        it.get_type()->name != "flower pot") {
+      empties.push_back(i);
+    }
+  }
+  std::vector<std::string> options;
+  options.push_back("Drink your fill");
+  if (!empties.empty()) {
+    std::stringstream fill;
+    fill << "Fill your empty bottles and cans (" << empties.size() << ")";
+    options.push_back(fill.str());
+  }
+  options.push_back("Leave it");
+  int choice = menu_vec("Fresh water.", options);
+  if (choice == 0) {
+    if (player->thirst <= 0) {
+      add_msg("You're not thirsty.");
+    } else {
+      player->thirst -= 120;
+      if (player->thirst < player->get_thirst_minimum()) {
+        player->thirst = player->get_thirst_minimum();
+      }
+      add_msg("You drink deeply from the water.");
+      player->use_ap(300);
+    }
+  } else if (choice == 1 && !empties.empty()) {
+    Item_type* water = ITEM_TYPES.lookup_name("water");
+    for (int i = 0; i < empties.size() && water; i++) {
+      Item w(water);
+      player->inventory[empties[i]].contents.push_back(w);
+    }
+    add_msg("You fill %d container%s with water.", int(empties.size()),
+            empties.size() == 1 ? "" : "s");
+    player->use_ap(100 * empties.size());
+  }
+  return true;
 }
