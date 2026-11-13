@@ -34,3 +34,11 @@ The game saves itself every two hours of game time, and when you quit.  Death is
 <c=white>Getting off the island<c=/>
 
 Listen to the radio from your wreck.  The wreck itself is on the beach where you woke: examine it (<c=magenta>x<c=/>) to see what it needs to sail again.  Materials count if you carry them or they lie within two steps of you.
+
+<c=white>The island map<c=/>
+
+Open it with <c=magenta>:<c=/>.  <c=ltgreen>C<c=/> marks a farming camp that trades (examine its counter), <c=ltred>R<c=/> a raider camp, <c=ltcyan>L<c=/> the Lab at the island's heart, <c=yellow>s<c=/> its substation and <c=ltred>P<c=/> the power plant.  Press <c=magenta>/<c=/> on the map to search for a place by name.
+
+<c=white>The Lab<c=/>
+
+The Lab's blast door needs power and a passcard.  Get the power plant running (you'll need a wrench), close the breakers at the Lab's substation, and look for a passcard: the plant's staff kept one in their office.
