@@ -351,3 +351,9 @@ Name: survivor camp
   Glyph: C ltgreen black
   Road_cost: 500
 Done
+
+# Asciiverse, 2026: raider camps, the bandits beside the farming camps.
+Name: raider camp
+  Glyph: R ltred black
+  Road_cost: 500
+Done

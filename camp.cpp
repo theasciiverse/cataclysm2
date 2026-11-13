@@ -23,7 +23,7 @@
 std::string wrap_tagged(std::string text, int width);           // escape.cpp
 int text_menu(std::string text, std::vector<std::string> options);
 
-/**** World generation: three camps on the main island ****/
+/**** World generation: three farming camps and two raider camps ****/
 
 void Worldmap::place_camps()
 {
@@ -40,7 +40,7 @@ void Worldmap::place_camps()
     }
   }
   std::vector<Point> placed;
-  for (int tries = 0; placed.size() < 3 && tries < 400 && !spots.empty();
+  for (int tries = 0; placed.size() < 5 && tries < 600 && !spots.empty();
        tries++) {
     Point p = spots[rng(0, spots.size() - 1)];
     bool ok = true;
@@ -62,8 +62,19 @@ void Worldmap::place_camps()
       }
     }
     if (ok) {
-      tiles[p.x][p.y].set_terrain("survivor camp");
+// Three farming camps, then two raider camps.
+      bool raiders = (placed.size() >= 3);
+      tiles[p.x][p.y].set_terrain(raiders ? "raider camp" : "survivor camp");
       tiles[p.x][p.y].monsters.clear();   // they keep their ground clear
+      if (raiders) {
+        Monster_genus* gen = MONSTER_GENERA.lookup_name("raiders");
+        if (gen) {
+          Monster_spawn spawn;
+          spawn.genus = gen;
+          spawn.population = rng(4, 6);
+          tiles[p.x][p.y].monsters.push_back(spawn);
+        }
+      }
       placed.push_back(p);
     }
   }
@@ -77,6 +88,8 @@ struct Trade_table
   std::map<std::string,int> buys;   // what a camp gives for one
   std::vector<std::string> sell_order;
   std::map<std::string,int> sells;  // what one costs
+  std::vector<std::string> wants;   // jobs: bring one of these ...
+  std::map<std::string,int> rewards;// ... for this much
   Trade_table() { loaded = false; }
 };
 
@@ -111,8 +124,17 @@ static void load_trade_table()
     } else if (kind == "sells") {
       TRADE.sells[name] = value;
       TRADE.sell_order.push_back(name);
+    } else if (kind == "wants") {
+      TRADE.wants.push_back(name);
+      TRADE.rewards[name] = value;
     }
   }
+}
+
+static std::string item_display_name(std::string name)
+{
+  Item_type* type = ITEM_TYPES.lookup_name(name);
+  return type ? type->name : name;
 }
 
 /**** The trader ****/
@@ -144,11 +166,57 @@ void Game::trade_interface()
     text << "\"Money's mostly paper now, but folk still want it, and " <<
             "anything that keeps you alive.  You've got <c=yellow>" <<
             trade_credit << "<c=/> on account with us.\"";
+    if (!camp_job.empty()) {
+      text << std::endl << std::endl << "They asked you for <c=yellow>" <<
+              item_display_name(camp_job) << "<c=/>, for " << TRADE.rewards[camp_job] << ".";
+    }
     std::vector<std::string> options;
     options.push_back("Sell them something");
     options.push_back("Buy from them");
+    options.push_back(camp_job.empty() ? "Ask about work" :
+                                         "Hand over what they asked for");
     options.push_back("Leave");
     int choice = text_menu(text.str(), options);
+    if (choice == 3) {
+      return;
+    }
+    if (choice == 2) {
+      if (camp_job.empty()) {
+        if (TRADE.wants.empty()) {
+          continue;
+        }
+        camp_job = TRADE.wants[rng(0, TRADE.wants.size() - 1)];
+        popup(wrap_tagged("\"Bring us " + item_display_name(camp_job) +
+                          " and we'll make it " +
+                          "worth your while.  Any of the camps will take " +
+                          "it.\"", 70).c_str());
+        continue;
+      }
+      bool done = false;
+      for (int i = 0; i < player->inventory.size(); i++) {
+        Item& it = player->inventory[i];
+        if (it.is_real() && no_caps(it.get_type()->name) == camp_job) {
+          if (it.count > 1) {
+            it.count--;
+          } else {
+            player->inventory.erase(player->inventory.begin() + i);
+          }
+          trade_credit += TRADE.rewards[camp_job];
+          add_msg("You hand over the %s: %d on account.",
+                  item_display_name(camp_job).c_str(),
+                  TRADE.rewards[camp_job]);
+          player->gain_experience(20);
+          camp_job = "";
+          done = true;
+          break;
+        }
+      }
+      if (!done) {
+        popup("\"You haven't got it.  We need %s.\"",
+              item_display_name(camp_job).c_str());
+      }
+      continue;
+    }
 
     if (choice == 0) {
 // What we carry that they take, one line per kind.
@@ -199,7 +267,8 @@ that's what we take.\"", 70).c_str());
             player->inventory.erase(player->inventory.begin() + i);
           }
           trade_credit += values[pick];
-          add_msg("You sell the %s for %d.", kinds[pick].c_str(),
+          add_msg("You sell the %s for %d.",
+                  item_display_name(kinds[pick]).c_str(),
                   values[pick]);
           break;
         }

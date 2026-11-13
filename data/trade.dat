@@ -49,3 +49,15 @@ sells: hammer = 20
 sells: wrench = 25
 sells: flashlight = 25
 sells: GPS unit = 150
+
+# "wants:" lines are jobs a camp hands out: bring one of the item and it
+# pays this much, on top of what it would give in a trade.
+wants: first aid kit = 40
+wants: batteries = 20
+wants: hammer = 30
+wants: rope = 25
+wants: whisky = 25
+wants: Electronics Basics = 35
+wants: Wild Edibles = 35
+wants: hunting knife = 30
+wants: work gloves = 20

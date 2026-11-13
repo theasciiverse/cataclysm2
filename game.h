@@ -87,6 +87,7 @@ public:
 /**** Survivor camps - camp.cpp ****/
   void trade_interface();
   int trade_credit;
+  std::string camp_job;   // what the camps asked for, or ""
   void player_death();
 
 /**** Engine - Main loop functions ****/

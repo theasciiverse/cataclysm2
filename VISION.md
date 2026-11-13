@@ -118,3 +118,12 @@ are recorded below as they are made.
   tents, a fire and a trade counter where the camp's trader (named in the
   dialogue, not drawn) deals on account. Prices are in `data/trade.dat`, so
   they can be tuned without code. Camps clear their own ground of monsters.
+- **Raiders** (2026-11-13): Whales' long-term plan has "nasty bandits"
+  among the camps. Ours are a new monster genus, `raiders` (a raider with
+  a blade, a raider gunman who shoots), living in two raider camps whose
+  huts hold stolen goods: guns, ammunition, money, medicine, now and then
+  a GPS unit. They fight zombies as readily as you.
+- **Camp jobs** (2026-11-13): Whales' missions were generated "eat this,
+  read that" tasks; the camps add simple fetch jobs ("bring us a first aid
+  kit"), listed in `data/trade.dat`, paid in credit and a little
+  experience.

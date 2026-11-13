@@ -62,10 +62,15 @@ Whales' "bad win": a seaworthy boat and a working GPS.
       bullets, liquor and computer parts on account, and sells food, water,
       medicine and the tools and materials both endings need
       (`data/trade.dat`)
+- [x] Camp jobs: ask about work and a camp asks for something it needs;
+      bring it to any camp for credit and some experience
+- [x] Two raider camps (`R`): raiders and raider gunmen, hostile to
+      everything, guarding what they have taken from others
 
 ## Toward 1.0.0: people
 
-- [ ] Camp folk as people you can see and talk to, camp missions; bandits
+- [ ] Camp folk as people you can see and talk to, missions that send you
+      somewhere
 - [ ] The four factions (Cultists, Military, Naturalists, Scientists),
       their missions, rank, and their fight for the Lab
 - [ ] Story mode and sandbox mode

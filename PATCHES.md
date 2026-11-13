@@ -195,3 +195,10 @@ two have commits of their own (Wad67, 2017, one UI fix-up; mytinylab,
   at positions outside it and piling up the further you travelled. They now
   go back into the world map's population of the tile they were on and
   spawn again when you return (`Game::return_offmap_monsters()`).
+- **Camp jobs**: "Ask about work" at a trade counter gives a job from the
+  `wants:` lines of `data/trade.dat`; handing the thing over at any camp
+  pays the listed credit and 20 experience. Saved with the game.
+- **Raiders**: a new genus `raiders` (`raider`, `raider gunman`) in
+  `monster_genera.dat` and `monsters.dat`, and two raider camps per island
+  (world terrain `raider camp`, its map in `data/mapgen/camp.map`, placed
+  with the farming camps), with 4 to 6 raiders each and their loot.

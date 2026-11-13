@@ -366,3 +366,34 @@ name: blinker
   speed: 100
 done
 
+
+##### Raiders (Asciiverse, 2026) #####
+
+name: raider
+  name_plural: raiders
+  genus: raiders
+  glyph: @ red black
+  chance: 100
+  attack:
+    verb: slash / slashes
+    weight: 3
+    speed: 100
+    to_hit: 1
+    cut: 9
+  done
+done
+
+name: raider gunman
+  name_plural: raider gunmen
+  genus: raiders
+  glyph: @ ltred black
+  chance: 40
+  ranged_attack:
+    verb: shoot / shoots
+    speed: 100
+    charge: 4
+    range: 12
+    variance: 3d20
+    pierce: 12
+  done
+done
