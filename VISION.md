@@ -113,3 +113,8 @@ are recorded below as they are made.
   ending. The aliens in the Lab are the Chiratia, the game's existing
   otherworldly genus. The radio carries a recorded message from the Lab's
   owners, "Central Research" (our name).
+- **Camps before people** (2026-11-13): the engine has no NPCs, and
+  Whales' camps are people. Until it does, a camp is a place: a stockade,
+  tents, a fire and a trade counter where the camp's trader (named in the
+  dialogue, not drawn) deals on account. Prices are in `data/trade.dat`, so
+  they can be tuned without code. Camps clear their own ground of monsters.

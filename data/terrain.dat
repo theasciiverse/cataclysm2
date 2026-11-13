@@ -1112,3 +1112,10 @@ name: lab core
   glyph: & ltcyan black
   movecost: 0
 done
+
+# A survivor camp's trade counter (Asciiverse, 2026): examine it to trade.
+name: trade counter
+  glyph: = yellow black
+  movecost: 0
+  height: 40
+done

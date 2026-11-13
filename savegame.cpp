@@ -424,6 +424,7 @@ bool Game::save_game()
          boat.rations << " " << boat.drinks << std::endl;
   out << "Lab: " << lab.plant_on << " " << lab.substation_on << " " <<
          lab.open << std::endl;
+  out << "Credit: " << trade_credit << std::endl;
   out << "Player:" << std::endl << player->save_data() << std::endl;
   for (std::list<Entity*>::iterator it = entities.instances.begin();
        it != entities.instances.end();
@@ -514,6 +515,8 @@ bool Game::load_game(std::string world_name)
       boat.hull = (h != 0);
       boat.sail = (s != 0);
       boat.gps  = (g != 0);
+    } else if (ident == "credit:") {
+      fin >> trade_credit;
     } else if (ident == "lab:") {
       int p, s, o;
       fin >> p >> s >> o;

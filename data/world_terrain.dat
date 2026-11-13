@@ -345,3 +345,9 @@ Name: power plant
   Glyph: P ltred black
   Road_cost: 500
 Done
+
+# Asciiverse, 2026: survivor camps that trade (camp.cpp, data/trade.dat).
+Name: survivor camp
+  Glyph: C ltgreen black
+  Road_cost: 500
+Done

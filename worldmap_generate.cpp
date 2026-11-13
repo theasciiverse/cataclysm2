@@ -497,6 +497,8 @@ void Worldmap::generate()
   place_monsters();
 // The Lab, its Substation and the Power Plant (lab.cpp)
   place_lab();
+// Survivor camps that trade (camp.cpp)
+  place_camps();
 }
 
 void Worldmap::place_monsters()

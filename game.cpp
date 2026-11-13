@@ -26,6 +26,7 @@ Game::Game()
   next_item_uid = 0;
   next_furniture_uid = 0;
   temp_light_level = 0;
+  trade_credit = 0;
   game_over = false;
 }
 
@@ -149,6 +150,7 @@ lose it?", worldmap->get_name().c_str())) {
   game_over = false;
   boat = Boat_project();
   lab = Lab_state();
+  trade_credit = 0;
 // A first-day guide (Asciiverse, 2026): Whales' early game, in a few lines.
   add_msg("<c=white>You wake on a beach, beside the wreck of your boat.<c=/>");
   add_msg("Find water, food and shelter before night.  Your things lie \
@@ -486,6 +488,10 @@ there.<c=/>", map->get_name(player->pos).c_str());
       } else {
         Tripoint examine = player->pos + dir;
         if (examine_lab_machinery(examine)) {
+          break;
+        }
+        if (map->get_name(examine) == "trade counter") {
+          trade_interface();
           break;
         }
         if (map->get_name(examine) == "wrecked boat") {
@@ -1706,7 +1712,14 @@ active items!");
       }
       player->inventory.push_back( Item(ITEM_TYPES.lookup_name("wrench")) );
       player->inventory.push_back( Item(ITEM_TYPES.lookup_name("Lab passcard")) );
-      add_msg("Panel east, breaker west, door north, core south.");
+      player->inventory.push_back( Item(ITEM_TYPES.lookup_name("diamond")) );
+      player->inventory.push_back( Item(ITEM_TYPES.lookup_name("brick of money")) );
+      Tile* counter = map->get_tile(player->pos + Tripoint(1, 1, 0));
+      if (counter) {
+        counter->terrain = TERRAIN.lookup_name("trade counter");
+      }
+      add_msg("Panel east, breaker west, door north, core south, trade \
+counter south-east.");
     } break;
 
     case DEBUG_ACTION_KILL_PLAYER:

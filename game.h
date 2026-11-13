@@ -84,6 +84,9 @@ public:
   void finish_lab_work(int stage);
   void lab_victory();
   Lab_state lab;
+/**** Survivor camps - camp.cpp ****/
+  void trade_interface();
+  int trade_credit;
   void player_death();
 
 /**** Engine - Main loop functions ****/

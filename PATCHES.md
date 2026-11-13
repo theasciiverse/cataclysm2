@@ -180,3 +180,14 @@ two have commits of their own (Wad67, 2017, one UI fix-up; mytinylab,
 - The radio also picks up the Lab's recorded message.
 - `--test` debug commands: `L` puts the machinery around the player with a
   wrench and a passcard, `k` kills the player.
+
+### 0.6.0: survivor camps
+
+- **Camps** (`camp.cpp`, `data/mapgen/camp.map`, `data/trade.dat`): three
+  per island, placed by `Worldmap::place_camps()` on field and forest away
+  from the Lab's grounds, new world terrain `survivor camp` and terrain
+  `trade counter`. Examining the counter trades: sell what the camp takes
+  for credit on account (saved with the game), buy food, water, medicine,
+  tools and materials.
+- The combined text and choices window from the boat (`text_menu()`) is
+  shared with the camps.

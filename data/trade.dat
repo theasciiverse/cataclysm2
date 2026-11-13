@@ -1,0 +1,51 @@
+# trade.dat - what the island's survivor camps trade (Asciiverse, 2026).
+#
+# Whales planned "several smaller camps of survivors, some of which will be
+# happy to trade their farm-grown food with the player"
+# (https://whalesdev.tumblr.com/post/74991567472) and food "bought from
+# NPCs ... by acquiring high-value loot"
+# (https://whalesdev.tumblr.com/post/91112281541).
+#
+# "buys:" lines are what a camp gives, in its own credit, for one of an
+# item you hand over; "sells:" lines what one costs.  Names are items.dat
+# names.
+
+buys: bundle of money = 8
+buys: brick of money = 60
+buys: diamond = 120
+buys: gold ring = 30
+buys: diamond necklace = 100
+buys: processor = 25
+buys: RAM = 15
+buys: data cable = 5
+buys: batteries = 6
+buys: first aid kit = 25
+buys: bandages = 8
+buys: aspirin = 4
+buys: codeine = 10
+buys: oxycodone = 15
+buys: cigarettes = 6
+buys: whisky = 8
+buys: vodka = 8
+buys: rum = 8
+buys: 9mm = 4
+buys: 00 shot = 4
+buys: .45 ACP = 4
+buys: 5.56 NATO = 5
+
+sells: water = 4
+sells: beans = 6
+sells: tomatoes = 5
+sells: dry rice = 5
+sells: beef jerky = 8
+sells: MRE (meat) = 12
+sells: bandages = 14
+sells: batteries = 10
+sells: rope = 10
+sells: nails = 20
+sells: tarp = 15
+sells: metal pole = 15
+sells: hammer = 20
+sells: wrench = 25
+sells: flashlight = 25
+sells: GPS unit = 150

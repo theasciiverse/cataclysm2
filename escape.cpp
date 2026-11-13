@@ -75,7 +75,7 @@ std::string wrap_tagged(std::string text, int width)
 
 // One window with the text above and lettered choices below; returns the
 // index chosen, or -1 for Esc.
-static int text_menu(std::string text, std::vector<std::string> options)
+int text_menu(std::string text, std::vector<std::string> options)
 {
   std::vector<std::string> lines;
   std::string wrapped = wrap_tagged(text, 72);

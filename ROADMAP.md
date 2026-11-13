@@ -54,9 +54,18 @@ Whales' "bad win": a seaworthy boat and a working GPS.
 - [ ] The other corner Substations, the other three passcards (landing
       strip, silo, sea) and the Control Station, as in Whales' notes
 
+## 0.6.0: people, first: the camps
+
+- [x] Three survivor camps on the island (`C` on the island map), behind
+      stockades with tents and a fire, their ground kept clear of monsters
+- [x] Each camp's trader takes money, jewellery, medicine, batteries,
+      bullets, liquor and computer parts on account, and sells food, water,
+      medicine and the tools and materials both endings need
+      (`data/trade.dat`)
+
 ## Toward 1.0.0: people
 
-- [ ] Camps of survivors to trade with; bandits
+- [ ] Camp folk as people you can see and talk to, camp missions; bandits
 - [ ] The four factions (Cultists, Military, Naturalists, Scientists),
       their missions, rank, and their fight for the Lab
 - [ ] Story mode and sandbox mode
