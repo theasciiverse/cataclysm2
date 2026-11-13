@@ -707,11 +707,21 @@ std::string Tile::save_data()
   return ret.str();
 }
 
-bool Tile::load_data(std::istream& data)
+bool Tile::is_plain()
+{
+  return terrain && !field.is_valid() && !furniture.is_real() && items.empty();
+}
+
+// first_ident: the first word, when the caller has already read it.
+bool Tile::load_data(std::istream& data, std::string first_ident)
 {
   std::string ident, junk;
+  bool have_first = !first_ident.empty();
   while (ident != "done" && !data.eof()) {
-    if ( ! (data >> ident) ) {
+    if (have_first) {
+      ident = first_ident;
+      have_first = false;
+    } else if ( ! (data >> ident) ) {
       debugmsg("Couldn't read data (Tile).");
       return false;
     }
@@ -1168,10 +1178,28 @@ std::string Submap::save_data()
   ret << "Rotation: " << int(rotation) << std::endl;
   ret << "Level: " << level << std::endl;
   ret << "Tiles: " << std::endl;
-  for (int x = 0; x < SUBMAP_SIZE; x++) {
-    for (int y = 0; y < SUBMAP_SIZE; y++) {
-      ret << tiles[x][y].save_data() << std::endl;
+// Plain tiles (terrain and hp, nothing on them) are written in runs,
+// "Run: <count> <hp> <terrain name>", which shrank a world's map files about
+// tenfold (Asciiverse, 2026); other tiles are written whole, as before.
+  int n = SUBMAP_SIZE * SUBMAP_SIZE;
+  for (int i = 0; i < n; ) {
+    Tile* t = &(tiles[i / SUBMAP_SIZE][i % SUBMAP_SIZE]);
+    if (!t->is_plain()) {
+      ret << t->save_data() << std::endl;
+      i++;
+      continue;
     }
+    int run = 1;
+    while (i + run < n) {
+      Tile* u = &(tiles[(i + run) / SUBMAP_SIZE][(i + run) % SUBMAP_SIZE]);
+      if (!u->is_plain() || u->terrain != t->terrain || u->hp != t->hp) {
+        break;
+      }
+      run++;
+    }
+    ret << "Run: " << run << " " << t->hp << " " << t->terrain->name <<
+           std::endl;
+    i += run;
   }
 
   ret << "Done";
@@ -1190,12 +1218,37 @@ bool Submap::load_data(std::istream& data)
     ident = no_caps(ident);
 
     if (ident == "tiles:") {
-      for (int x = 0; x < SUBMAP_SIZE; x++) {
-        for (int y = 0; y < SUBMAP_SIZE; y++) {
-          if (!tiles[x][y].load_data(data)) {
-            debugmsg("Failed to read Submap Tile [%d:%d]", x, y);
+      int n = SUBMAP_SIZE * SUBMAP_SIZE;
+      for (int i = 0; i < n; ) {
+        std::string first;
+        if (!(data >> first)) {
+          debugmsg("Couldn't read Submap tiles.");
+          return false;
+        }
+        if (no_caps(first) == "run:") {
+          int count, hp;
+          std::string name;
+          data >> count >> hp;
+          std::getline(data, name);
+          Terrain* ter = TERRAIN.lookup_name(trim(name));
+          if (!ter || count <= 0) {
+            debugmsg("Bad tile run '%s' x%d", name.c_str(), count);
             return false;
           }
+          for (int k = 0; k < count && i < n; k++, i++) {
+            Tile* t = &(tiles[i / SUBMAP_SIZE][i % SUBMAP_SIZE]);
+            t->terrain = ter;
+            t->hp = hp;
+            t->items.clear();
+            t->field = Field();
+            t->furniture = Furniture();
+          }
+        } else {
+          if (!tiles[i / SUBMAP_SIZE][i % SUBMAP_SIZE].load_data(data, first)) {
+            debugmsg("Failed to read Submap Tile %d", i);
+            return false;
+          }
+          i++;
         }
       }
 

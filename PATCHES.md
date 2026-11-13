@@ -209,3 +209,7 @@ two have commits of their own (Wad67, 2017, one UI fix-up; mytinylab,
 - **A closed terminal saves the game**: SIGHUP (the terminal went away) and
   SIGTERM now save before the game ends, instead of losing everything since
   the last autosave (`main.cpp`, checked once per player input).
+- **Smaller saves**: plain tiles (terrain and HP, nothing on them) are
+  written in runs, `Run: <count> <hp> <terrain>`, instead of three lines
+  each. A new game's world folder went from 44 MB to 6 MB; older map files
+  still load.

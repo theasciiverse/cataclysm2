@@ -121,7 +121,8 @@ struct Tile
   bool apply_signal  (std::string signal, Entity* user = NULL);
 
   std::string save_data();
-  bool load_data(std::istream& data);
+  bool load_data(std::istream& data, std::string first_ident = "");
+  bool is_plain(); // terrain and hp only: saved in runs (Asciiverse)
 };
 
 struct Submap
