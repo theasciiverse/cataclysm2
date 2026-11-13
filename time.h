@@ -35,7 +35,7 @@ enum Moon_phase
 // Functions for converting minutes, hours, days into # of turns
 #define MINUTES(x)  ( ((x) * 60)    / SECONDS_IN_TURN )
 #define HOURS(x)    ( ((x) * 3600)  / SECONDS_IN_TURN )
-#define DAYS(x)     ( ((x) * 86400) / SECONDS_IN_TURN
+#define DAYS(x)     ( ((x) * 86400) / SECONDS_IN_TURN )
 
 class Time
 {

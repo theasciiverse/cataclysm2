@@ -21,6 +21,9 @@ public:
   void set_type(std::string name);
   void set_type(Monster_type* newtype);
 
+  virtual std::string save_data();   // savegame.cpp
+  virtual bool load_data(std::istream& data);
+
   virtual glyph get_glyph();
   virtual std::string get_data_name();
   virtual std::string get_name();

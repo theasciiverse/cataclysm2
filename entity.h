@@ -89,6 +89,11 @@ public:
   virtual std::string conjugate(const std::string &verb);
   virtual glyph get_glyph();
 
+// Saving (savegame.cpp)
+  virtual std::string save_data();
+  virtual bool load_data(std::istream& data);
+  bool load_entity_field(const std::string& ident, std::istream& data);
+
 // Entity type
   virtual bool is_player()  { return false; }
   virtual bool is_monster() { return false; }

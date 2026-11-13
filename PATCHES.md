@@ -4,9 +4,13 @@ This is the Asciiverse packaging of [Cataclysm II](https://github.com/Whales/Cat
 by Whales, with contributions from Aninimouse, Trevmillion, superninjakiwi,
 WeendVidente, Drakasin and others (GPL-3.0, `LICENSE`; `data/motd.txt`
 says GPLv3 too). It is Whales' unfinished ground-up rewrite of Cataclysm,
-an early alpha, abandoned in 2016. It is packaged as it is: playable for a
-while, with much missing, and characters cannot be saved. Nothing here
-tries to finish it.
+an early alpha, abandoned in 2016. From 0.2.0 (2026-11-13) this branch
+continues it toward the finished game Whales planned: `VISION.md` sets out
+that plan from Whales' notes and development blog, `ROADMAP.md` the
+releases. The alpha as first packaged here is `v0+20140424-av.1`; our
+continuation is versioned 0.2.0, 0.3.0 and on (our own game's scheme, since
+the changes are now our own work on top of Whales'), 1.0.0 when the plan
+is done.
 
 Upstream is the `upstream` remote. The `asciiverse` branch starts from
 upstream's `master` at `8635e2ec3f714a7b6549b70cfadd36e38ef8c6b1`
@@ -102,3 +106,34 @@ two have commits of their own (Wad67, 2017, one UI fix-up; mytinylab,
 - **How to play it, at the top of README.md.** A short note on installing and
   starting it with av, or from a release archive; the original text follows
   unchanged.
+
+## The continuation (0.2.0 on)
+
+### 0.2.0: saving, loading and death
+
+- **Saving and loading** (`savegame.cpp`, new): one save per world,
+  `<save dir>/<world>/game.sav`, beside the world's map files: the turn,
+  the map's position, the player (stats, skills, traits, needs, missions,
+  status effects, chapters read, HP, everything worn and carried) and the
+  monsters on the map, written to a temporary file and renamed. The world
+  map and every loaded map sector are written with it. L on the first
+  screen lists the worlds with a saved game; S saves; Q now asks "Save and
+  quit?" (it asked "Commit suicide?" and ended the game); the game saves
+  itself every two hours of game time.
+- **Every game has a named world.** A new character without a chosen world
+  got a nameless one whose map files went into the save folder's root; it
+  now gets a random name (the world screen's own generator) and is kept.
+  Starting a new character in a world that has a saved game asks first.
+- **Death.** Nothing ever ended the game when the player's HP ran out: it
+  went negative and play went on. A head or torso at 0 HP now ends it with
+  a death screen (days survived, what did it), and deletes the save.
+  `Player::last_damage` keeps the cause. `--test` adds a debug command,
+  `k`, to test it.
+- **Items** keep their contents (a loaded magazine, a bottle's water) when
+  saved: `Item::save_data()` never wrote them. Loading never kept an item's
+  on/off state (read, then dropped). Copying an item left its HP
+  uninitialised, and assigning one did not copy HP or the on/off state.
+- `DAYS(x)` in `time.h` was missing its closing bracket (unused until now).
+- The start screen (`data/motd.txt`) says what this is and points bug
+  reports to our repository; it gave Whales' email and IRC channel and
+  called the game "not intended for general release".

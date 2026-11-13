@@ -13,6 +13,8 @@
 class Player : public Entity
 {
 public:
+  virtual std::string save_data();   // savegame.cpp
+  virtual bool load_data(std::istream& data);
   Player();
   ~Player();
 
@@ -82,6 +84,7 @@ public:
 // Values
   int current_hp[HP_PART_MAX];
   int max_hp    [HP_PART_MAX];
+  std::string last_damage; // what hurt us last, for the death screen
 
 private:
   std::string name;

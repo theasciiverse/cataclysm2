@@ -1,12 +1,12 @@
 Cataclysm II
 ============
 
-An unfinished alpha. Cataclysm II is Whales' ground-up rewrite of
-Cataclysm, the roguelike Whales wrote from 2010 to 2013, worked on from
-2013 to 2016 and then left: there is a world to explore, a character to make, items, monsters
-and missions, but much is missing, and characters cannot be saved yet.
-It is a separate project from Cataclysm: Dark Days Ahead, the community
-fork of the first Cataclysm.
+Whales' sequel to Cataclysm (2013 to 2016), continued by the Asciiverse
+from Whales' notes and development blog toward the finished game Whales
+planned: you wake on the beach of an island beside the wreck of your boat,
+and must survive it and find your way off. VISION.md and ROADMAP.md in the
+repository say where it is going. It is a separate project from Cataclysm:
+Dark Days Ahead, the community fork of the first Cataclysm.
 
 This build is the Asciiverse packaging of github.com/Whales/Cataclysm2,
 from github.com/theasciiverse/cataclysm2; PATCHES.md there lists every
@@ -24,6 +24,7 @@ data from data/ and cuss/ beside the program. Worlds you make under
   cataclysm2 --help      the command-line options
   cataclysm2 --test      cheat commands (Z in the game)
 
-H on the first screen opens the manual, with the keys; there is no help
-key in the game itself. Q in the game ends it for good (characters are
-not saved). README.upstream.md is the upstream readme.
+H on the first screen opens the manual, with the keys. In the game, S
+saves, Q saves and quits, and the game saves itself every two hours of
+game time; L on the first screen carries on. Death is permanent: it ends
+the game and deletes the save. README.upstream.md is the upstream readme.

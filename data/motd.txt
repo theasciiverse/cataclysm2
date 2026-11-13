@@ -1,7 +1,8 @@
-Welcome to <c=ltgreen>Cataclysm II<c=/>!  This is an early alpha build - not intended for general release.  However, if you'd like to play, I would greatly appreciate bug reports and feature requests.  Reach me at:
+Welcome to <c=ltgreen>Cataclysm II<c=/>!  Whales wrote it from 2013 to 2016 as the sequel to Cataclysm, with a plan for a game you can win.  The Asciiverse continues it from Whales' notes and development blog.
 
-      <c=magenta>Email:  <c=ltcyan>fivedozenwhales@gmail.com<c=/>
-      <c=magenta>GitHub: <c=cyan>https://github.com/Whales/Cataclysm2/<c=/>
-      <c=magenta>IRC:    <c=ltred>#cataclysm2<c=/> on <c=ltred>irc.freenode.net<c=/>
+You wake on the beach of an island, beside the wreck of your boat.  Survive, and find your way off.
+
+  <c=magenta>Original: <c=cyan>github.com/Whales/Cataclysm2<c=/>
+  <c=magenta>Bugs:     <c=cyan>github.com/theasciiverse/cataclysm2<c=/>
 
 <c=dkgray>Cataclysm II is licensed under the <c=ltblue>GPLv3<c=dkgray> license, and is free to copy, distribute, and modify.  Any changes must be made public for free.  See the full text of the GPLv3 at <c=cyan>https://gnu.org/licenses/gpl.html<c=dkgray>.<c=/>

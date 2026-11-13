@@ -41,6 +41,16 @@ public:
   int  world_screen(); // Returns a new world_index
   void create_world();
 
+/**** Saving - savegame.cpp ****/
+  std::string save_file_for(std::string world_name);
+  bool has_save(std::string world_name);
+  bool save_game();
+  void delete_save();
+  bool load_game(std::string world_name);
+  std::string pick_saved_game();  // "" if cancelled
+  bool player_is_dead();
+  void player_death();
+
 /**** Engine - Main loop functions ****/
   bool main_loop();
   void reset_temp_values();

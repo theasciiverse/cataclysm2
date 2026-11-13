@@ -88,8 +88,26 @@ bool Game::setup_new_game(int world_index)
       return false;
     }
   } else {
+    popup_nowait("Generating the island, please wait...");
     worldmap->generate();
+// Every game has a named world, so it can be saved: a new one gets a
+// random name of its own and is kept beside the others.
+    do {
+      worldmap->randomize_name();
+    } while (file_exists(SAVE_DIR + "/worlds/" + worldmap->get_name() +
+                         ".map"));
+    if (worldmap->save_to_name()) {
+      worldmap_names.push_back(worldmap->get_name());
+    }
   }
+  if (has_save(worldmap->get_name()) &&
+      !query_yn("%s has a saved game.  Start a new character there and \
+lose it?", worldmap->get_name().c_str())) {
+    delete worldmap;
+    worldmap = NULL;
+    return false;
+  }
+  delete_save();
 
 // Need to set time BEFORE creating a new character - because creating a new
 // character uses time to set mission deadlines!
@@ -157,12 +175,10 @@ bool Game::starting_menu()
       }
 
     } else if (ch == 'l' || ch == 'L') {
-// TODO: Load character here
-// Characters are never saved yet, so there is nothing to load; returning true
-// here started the main loop with no player, which quit at once.
-      popup("Cataclysm II is an unfinished alpha: characters cannot be\n\
-saved or loaded yet.  Your worlds are kept, and a new\n\
-character can start in one (W: Manage Worlds).");
+      std::string world = pick_saved_game();
+      if (!world.empty() && load_game(world)) {
+        return true;
+      }
 
     } else if (ch == 'w' || ch == 'W') {
       current_world = world_screen();
@@ -323,11 +339,19 @@ bool Game::main_loop()
 // Now all other entities get their turn
   move_entities();
 // Maybe a monster killed us
+  if (player_is_dead()) {
+    player_death();
+  }
   if (game_over) {
     return false; // This terminates the game
   }
 // Advance the turn
   time.increment();
+// Autosave every two hours of game time, so a closed terminal or a crash
+// loses little.
+  if (time.get_turn() % HOURS(2) == 0) {
+    save_game();
+  }
   return true;    // This keeps the game going
 }
 
@@ -739,10 +763,18 @@ there.<c=/>", map->get_name(examine).c_str());
       }
       break;
 
+    case IACTION_SAVE:
+      if (save_game()) {
+        add_msg("Game saved.");
+      }
+      break;
+
     case IACTION_QUIT:
-      if (query_yn("Commit suicide?")) {
-        game_over = true;
-        player->action_points = 0;
+      if (query_yn("Save and quit?")) {
+        if (save_game()) {
+          game_over = true;
+          player->action_points = 0;
+        }
       }
       break;
   }
@@ -1610,6 +1642,13 @@ void Game::debug_command()
       map->clear_items();
       add_msg("Items cleared.  Note; this may cause a crash if there were \
 active items!");
+      break;
+
+    case DEBUG_ACTION_KILL_PLAYER:
+      if (query_yn("Kill yourself (testing the death screen)?")) {
+        player->last_damage = "the debug menu";
+        player->current_hp[HP_PART_TORSO] = 0;
+      }
       break;
 
     case DEBUG_ACTION_SPAWN_MONSTER: {

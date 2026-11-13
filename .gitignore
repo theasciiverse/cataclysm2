@@ -19,3 +19,5 @@ dist/
 .deps/
 __pycache__/
 !asciiverse/*.txt
+obj-asan/
+c2asan

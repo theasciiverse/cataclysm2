@@ -619,6 +619,9 @@ void Player::take_damage(Damage_type damtype, int damage, std::string reason,
 void Player::take_damage_no_armor(Damage_type damtype, int damage,
                                   std::string reason, Body_part part)
 {
+  if (damage > 0 && !reason.empty()) {
+    last_damage = reason;   // for the death screen
+  }
   current_hp[ convert_to_HP(part) ] -= damage;
   int min_pain = damage / 2, max_pain = damage;
   if (has_trait(TRAIT_PAIN_RESISTANT)) {

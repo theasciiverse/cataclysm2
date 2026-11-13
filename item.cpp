@@ -49,9 +49,9 @@ Item::Item(const Item &rhs)
   charges     = rhs.charges;
   subcharges  = rhs.subcharges;
   fire_mode   = rhs.fire_mode;
+  hp          = rhs.hp;  // was left uninitialised in every copy
   active      = rhs.active;
   corpse      = rhs.corpse;
-// Note lack of UID copy - is this correct?
 
   if (!rhs.contents.empty()) {
     contents.clear();
@@ -73,7 +73,9 @@ Item& Item::operator=(const Item& rhs)
   charges     = rhs.charges;
   subcharges  = rhs.subcharges;
   fire_mode   = rhs.fire_mode;
-  uid         = rhs.uid;    // Will this cause bugs?
+  hp          = rhs.hp;      // hp and active were not copied by assignment
+  active      = rhs.active;
+  uid         = rhs.uid;
   corpse      = rhs.corpse;
 
   contents.clear();
@@ -1100,6 +1102,11 @@ std::string Item::save_data()
   if (corpse) {
     ret << "Corpse: " << corpse->name << std::endl;
   }
+// Contents (a loaded magazine, a bottle's water, ...) follow as items of
+// their own; without them a saved container came back empty.
+  for (int i = 0; i < contents.size(); i++) {
+    ret << "Content:" << std::endl << contents[i].save_data() << std::endl;
+  }
   ret << "Done";
 
   return ret.str();
@@ -1165,7 +1172,15 @@ bool Item::load_data(std::istream& data)
                  int(ITEM_ACTIVE_MAX) - 1);
         return false;
       }
+      active = Item_active_type(tmpact);  // it was read but never kept
       std::getline(data, junk);
+
+    } else if (ident == "content:") {
+      Item tmpcont;
+      if (!tmpcont.load_data(data)) {
+        return false;
+      }
+      contents.push_back(tmpcont);
 
     } else if (ident == "corpse:") {
       std::string tmpname;

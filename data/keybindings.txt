@@ -48,3 +48,4 @@ p         = monster_path
 !         = memory_info
 b         = place_bonus
 x         = gain_xp
+k         = kill_player

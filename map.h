@@ -201,6 +201,11 @@ public:
   int size();
   std::string all_size();
 
+// savegame.cpp: write every loaded sector to disk, keeping them loaded;
+// and forget everything loaded.
+  void save_all();
+  void reset();
+
 // For debugging purposes.
   std::string get_range_text();
 

@@ -2,6 +2,7 @@
 #define _SKILL_H_
 
 #include <string>
+#include <istream>
 
 enum Skill_type
 {
@@ -65,6 +66,9 @@ struct Skill_set
   void increase_max_level(Skill_type type, int amount = 1);
 
   void unlock_skill(Skill_type type); // No max level anymore!
+
+  std::string save_data();   // savegame.cpp
+  bool load_data(std::istream& data);
 
   int  improve_cost(Skill_type type);
   bool is_unlocked(Skill_type type) const;
