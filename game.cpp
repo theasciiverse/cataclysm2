@@ -973,6 +973,56 @@ void Game::shift_if_needed()
        it++) {
     (*it)->shift(shiftx, shifty);
   }
+  return_offmap_monsters();
+}
+
+// Monsters left behind when the map moves on used to stay in the game,
+// acting at positions off the map, piling up as you travelled.  They go back
+// into the world map's population of the tile they were on, to be spawned
+// again when you come back (Asciiverse, 2026).
+void Game::return_offmap_monsters()
+{
+  int size = SUBMAP_SIZE * MAP_SIZE;
+  std::list<Entity*>::iterator it = entities.instances.begin();
+  while (it != entities.instances.end()) {
+    Entity* ent = *it;
+    if (ent == player || !ent->is_monster() || ent->dead ||
+        (ent->pos.x >= 0 && ent->pos.x < size &&
+         ent->pos.y >= 0 && ent->pos.y < size)) {
+      it++;
+      continue;
+    }
+    Monster* mon = static_cast<Monster*>(ent);
+    int sx = (ent->pos.x >= 0 ? ent->pos.x / SUBMAP_SIZE :
+                                (ent->pos.x - SUBMAP_SIZE + 1) / SUBMAP_SIZE);
+    int sy = (ent->pos.y >= 0 ? ent->pos.y / SUBMAP_SIZE :
+                                (ent->pos.y - SUBMAP_SIZE + 1) / SUBMAP_SIZE);
+    Worldmap_tile* tile = worldmap->get_tile(map->posx + sx, map->posy + sy);
+    if (tile && mon->type && mon->type->genus && tile != NULL) {
+      bool added = false;
+      for (int i = 0; i < tile->monsters.size(); i++) {
+        if (tile->monsters[i].genus == mon->type->genus) {
+          tile->monsters[i].population++;
+          added = true;
+        }
+      }
+      if (!added) {
+        Monster_spawn spawn;
+        spawn.genus = mon->type->genus;
+        spawn.population = 1;
+        tile->monsters.push_back(spawn);
+      }
+    }
+// Anything targeting it lets go.
+    for (std::list<Entity*>::iterator t = entities.instances.begin();
+         t != entities.instances.end(); t++) {
+      if ((*t)->plan.target_entity == ent) {
+        (*t)->plan.target_entity = NULL;
+      }
+    }
+    it = entities.erase(it);
+    delete ent;
+  }
 }
 
 void Game::make_sound(std::string desc, int volume, Tripoint pos)

@@ -101,6 +101,7 @@ public:
 
 /**** Engine - Called-as-needed ****/
   void shift_if_needed();  // Shift the map, if the player's not in the center
+  void return_offmap_monsters();
   void make_sound(std::string desc, int volume, Tripoint pos);
   void make_sound(std::string desc, int volume, Point pos);
   void make_sound(std::string desc, int volume, int x, int y);

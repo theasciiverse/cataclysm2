@@ -191,3 +191,7 @@ two have commits of their own (Wad67, 2017, one UI fix-up; mytinylab,
   tools and materials.
 - The combined text and choices window from the boat (`text_menu()`) is
   shared with the camps.
+- **Monsters left off the map** when it moves on stayed in the game, acting
+  at positions outside it and piling up the further you travelled. They now
+  go back into the world map's population of the tile they were on and
+  spawn again when you return (`Game::return_offmap_monsters()`).
