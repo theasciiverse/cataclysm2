@@ -250,3 +250,18 @@ two have commits of their own (Wad67, 2017, one UI fix-up; mytinylab,
   terrain, or `errand`) and `r` (faction trust, money and a week of the
   race; again to end a hold); `C2_WORLDGEN_TEST=N` generates N islands,
   prints what each holds and exits (for AddressSanitizer runs).
+
+### 0.7.1: every island complete, and no hang
+
+- **Generating the island could hang for ever** (Whales' own TODO, "this
+  occasionally fails to terminate"): a river's random walk could wander on
+  a plateau without reaching the sea. A river now stops after 4000 steps
+  (`worldmap_generate.cpp`). Before, about one new island in thirty never
+  finished generating.
+- **Every island has all its places**: the Lab's Substation could be
+  missing (no land exactly two squares off in a straight line), leaving the
+  Lab unopenable; it now takes the nearest land square two to fourteen
+  away. The faction bases, the wreck and the Control Station relax their
+  spacing when an island is crowded. Checked over 150 generated islands
+  (`C2_WORLDGEN_TEST`), 50 of them under AddressSanitizer and UBSan.
+- The preview recorder answers the story/sandbox question.

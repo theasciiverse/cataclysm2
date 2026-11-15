@@ -191,8 +191,12 @@ void Worldmap::generate()
   for (int i = 0; i < river_seeds.size(); i++) {
     Point rp = river_seeds[i];
     bool done = false;
-// TODO: This occasionally fails to terminate.
-    while (!done) {
+// Whales' TODO said this "occasionally fails to terminate": a river could
+// wander for ever on a plateau and hang "Generating the island".  A river
+// that hasn't reached the sea in 4000 steps stops where it is (Asciiverse,
+// 2026).
+    int steps = 0;
+    while (!done && steps++ < 4000) {
       if (!tiles[rp.x][rp.y].terrain->has_flag(WTF_NO_RIVER) &&
           !tiles[rp.x][rp.y].terrain->has_flag(WTF_WATER)      ) {
         tiles[rp.x][rp.y].set_terrain("river");

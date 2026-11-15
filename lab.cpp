@@ -18,6 +18,7 @@
 #include "monster_type.h"
 #include "rng.h"
 #include <sstream>
+#include <cstdlib>
 
 std::string wrap_tagged(std::string text, int width);  // escape.cpp
 int text_menu(std::string text, std::vector<std::string> options);
@@ -73,16 +74,21 @@ void Worldmap::place_lab()
   tiles[lab.x][lab.y].monsters.clear();
   add_spawn(&(tiles[lab.x][lab.y]), "Chiratia", rng(6, 9));
 
-// Its Substation, beside it.
-  for (int n = 0; n < 8; n++) {
-    int dx = (n % 3) - 1, dy = (n / 3) - 1;
-    if (dx == 0 && dy == 0) {
-      continue;
-    }
-    Point p(lab.x + dx * 2, lab.y + dy * 2);
-    if (is_land(this, p)) {
-      tiles[p.x][p.y].set_terrain("lab substation");
-      break;
+// Its Substation, beside it: the nearest land square two or more away
+// (some islands have no land exactly two squares off in a straight line).
+  bool placed_sub = false;
+  for (int r = 2; !placed_sub && r <= 14; r++) {
+    for (int dx = -r; !placed_sub && dx <= r; dx++) {
+      for (int dy = -r; !placed_sub && dy <= r; dy++) {
+        if (abs(dx) != r && abs(dy) != r) {
+          continue;
+        }
+        Point p(lab.x + dx, lab.y + dy);
+        if (is_land(this, p)) {
+          tiles[p.x][p.y].set_terrain("lab substation");
+          placed_sub = true;
+        }
+      }
     }
   }
 

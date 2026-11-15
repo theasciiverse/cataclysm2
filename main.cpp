@@ -66,7 +66,8 @@ int main(int argc, char* argv[])
         int count = 0;
         for (int x = 0; x < WORLDMAP_SIZE; x++) {
           for (int y = 0; y < WORLDMAP_SIZE; y++) {
-            if (w->get_name(x, y) == sites[k]) {
+            Worldmap_tile* t = w->get_tile(x, y, false);
+            if (t && t->terrain && t->terrain->name == sites[k]) {
               count++;
             }
           }

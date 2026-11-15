@@ -118,7 +118,11 @@ def take(seed):
     r = Rec("cataclysm2", "Cataclysm II")
     r.wait_for("New Character", 8)
     r.pump(3.0)                     # the first screen
-    r.key("N", 0.8)                 # stats: two points each to Str and Dex
+    r.key("N", 0.8)
+    r.wait_for("How do you want to play", 20)
+    r.pump(1.0)
+    r.key("a", 0.8)                 # story mode
+    # stats: two points each to Str and Dex
     for k in (RIGHT, RIGHT, DOWN, RIGHT, RIGHT):
         r.key(k, 0.15)
     r.key(">", 0.6)                 # traits: none

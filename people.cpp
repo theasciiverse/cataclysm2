@@ -340,9 +340,10 @@ void Worldmap::place_factions()
   const char* genera[4] = { "cultists", "military", "naturalists",
                             "scientists" };
   for (int b = 0; b < 4; b++) {
-    for (int tries = 0; tries < 800; tries++) {
+    for (int tries = 0; tries < 1600; tries++) {
       Point p = open[rng(0, open.size() - 1)];
-      if (rl_dist(p, L) < 8 || !far_from(p, taken, 10)) {
+      int near = tries < 800 ? 8 : 4, apart = tries < 800 ? 10 : 4;
+      if (rl_dist(p, L) < near || !far_from(p, taken, apart)) {
         continue;
       }
       tiles[p.x][p.y].set_terrain(bases[b]);
@@ -419,11 +420,12 @@ void Worldmap::place_factions()
   }
 
 // The Control Station, a short walk from the Lab.
-  for (int tries = 0; tries < 800; tries++) {
+  for (int tries = 0; tries < 2400; tries++) {
     Point p = land[rng(0, land.size() - 1)];
     Worldmap_tile* t = get_tile(p);
     int d = rl_dist(p, L);
-    if (d < 4 || d > 9 || !t || !t->terrain ||
+    int most = tries < 800 ? 9 : tries < 1600 ? 14 : 30;
+    if (d < 3 || d > most || !t || !t->terrain ||
         t->terrain->has_flag(WTF_WATER) ||
         t->terrain->name.find("beach") != std::string::npos ||
         !far_from(p, taken, 3)) {
