@@ -223,6 +223,8 @@ std::string debug_action_name(Debug_action action)
     case DEBUG_ACTION_GAIN_XP:        return "gain_xp";
     case DEBUG_ACTION_KILL_PLAYER:    return "kill_player";
     case DEBUG_ACTION_LAB_TEST:       return "lab_test";
+    case DEBUG_ACTION_TRAVEL:         return "travel";
+    case DEBUG_ACTION_FACTION_TEST:   return "faction_test";
     case DEBUG_ACTION_MAX:            return "BUG - DEBUG_ACTION_MAX";
     default:                          return "BUG - Unnamed Debug_action";
   }

@@ -74,8 +74,9 @@ bool Game::danger_near()
        it != entities.instances.end();
        it++) {
     Entity* ent = *it;
-    if (ent == player || ent->dead || !ent->is_monster()) {
-      continue;
+    if (ent == player || ent->dead || !ent->is_monster() ||
+        !static_cast<Monster*>(ent)->is_enemy(player)) {
+      continue;   // people who mean no harm aren't danger (people.cpp)
     }
     int dist = rl_dist(player->pos, ent->pos);
     if (sleeping) {

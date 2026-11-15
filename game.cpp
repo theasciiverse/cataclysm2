@@ -16,6 +16,8 @@ std::vector<std::string> get_pickup_strings(std::vector<Item> *items,
                                             std::vector<bool> *picking_up);
 std::string pickup_string(Item *item, char letter, bool picking_up);
 
+int text_menu(std::string text, std::vector<std::string> options); // escape.cpp
+
 Game::Game()
 {
   map       = NULL;
@@ -30,7 +32,12 @@ Game::Game()
   temp_light_level = 0;
   trade_credit = 0;
   game_over = false;
+  member = GROUP_NONE;
+  sandbox = false;
+  factions_on = true;
 }
+
+void people_new_game(Game* g);   // people.cpp
 
 Game::~Game()
 {
@@ -112,6 +119,47 @@ lose it?", worldmap->get_name().c_str())) {
   }
   delete_save();
 
+// Story or sandbox (Whales' notes, "Game Modes"; Asciiverse, 2026).
+  {
+    std::vector<std::string> modes;
+    modes.push_back("Story: the factions race for the Lab; the game can be \
+won or lost");
+    modes.push_back("Sandbox: survive as long as you like, no race and no \
+countdowns");
+    int mode = text_menu("<c=white>How do you want to play?<c=/>", modes);
+    sandbox = (mode == 1);
+    factions_on = true;
+    if (sandbox) {
+      std::vector<std::string> opts;
+      opts.push_back("Factions on the island");
+      opts.push_back("No factions: only the camps and the raiders");
+      factions_on = (text_menu("Factions?", opts) != 1);
+      std::vector<std::string> dens;
+      dens.push_back("Fewer monsters");
+      dens.push_back("As many monsters as usual");
+      dens.push_back("More monsters");
+      int d = text_menu("Monsters?", dens);
+      for (int x = 0; x < WORLDMAP_SIZE; x++) {
+        for (int y = 0; y < WORLDMAP_SIZE; y++) {
+          Worldmap_tile* t = worldmap->get_tile(x, y, false);
+          for (int i = 0; t && i < t->monsters.size(); i++) {
+            std::string gn = t->monsters[i].genus ?
+                             t->monsters[i].genus->name : "";
+            bool people = (gn == "survivors" || gn == "cultists" ||
+                           gn == "military" || gn == "naturalists" ||
+                           gn == "scientists");
+            if (people && !factions_on && gn != "survivors") {
+              t->monsters[i].population = 0;
+            } else if (!people && d == 0) {
+              t->monsters[i].population /= 2;
+            } else if (!people && d == 2) {
+              t->monsters[i].population += t->monsters[i].population / 2 + 1;
+            }
+          }
+        }
+      }
+    }
+  }
 // Need to set time BEFORE creating a new character - because creating a new
 // character uses time to set mission deadlines!
   time = Time(0, 0, 8, 1, SEASON_SPRING, STARTING_YEAR);
@@ -153,6 +201,8 @@ lose it?", worldmap->get_name().c_str())) {
   boat = Boat_project();
   lab = Lab_state();
   trade_credit = 0;
+  camp_job = "";
+  people_new_game(this);
 // A first-day guide (Asciiverse, 2026): Whales' early game, in a few lines.
   add_msg("<c=white>You wake on a beach, beside the wreck of your boat.<c=/>");
   add_msg("Find water, food and shelter before night.  Your things lie \
@@ -362,6 +412,11 @@ bool Game::main_loop()
   }
   if (game_over) {
     return false; // This terminates the game
+  }
+// People, errands and the factions' race for the Lab (people.cpp)
+  people_turn();
+  if (game_over) {
+    return false;
   }
 // Advance the turn
   time.increment();
@@ -1403,10 +1458,13 @@ void Game::player_move(int xdif, int ydif)
   Entity* ent = entities.entity_at(newx, newy, player->pos.z);
   std::string tername = map->get_name(newx, newy, player->pos.z);
 
-// If we bump an entity, attack it.
-// TODO: If that entity is a friendly NPC, talk instead!
+// If we bump an entity: people talk (people.cpp); anything else, attack.
   if (ent) {
-    player->attack(ent);
+    if (ent->is_monster()) {
+      talk_to(static_cast<Monster*>(ent));
+    } else {
+      player->attack(ent);
+    }
 
 // Check that we can drag our furniture (if any)
   } else if (!player->can_drag_furniture_to(map, newx, newy)) {
@@ -1760,6 +1818,7 @@ active items!");
 // The Lab's machinery around the player, to test it (lab.cpp)
       const char* ters[4] = { "plant control panel", "breaker panel",
                               "lab blast door", "lab core" };
+      lab.control_on = true;   // the Control Station's switch, for testing
       Tripoint at[4] = { player->pos + Tripoint(1, 0, 0),
                          player->pos + Tripoint(-1, 0, 0),
                          player->pos + Tripoint(0, -1, 0),
@@ -1785,6 +1844,58 @@ active items!");
       player->inventory.push_back( Item(ITEM_TYPES.lookup_name("plastic bottle")) );
       add_msg("Panel east, breaker west, door north, core south, trade \
 counter south-east, water south-west.");
+    } break;
+
+    case DEBUG_ACTION_TRAVEL: {
+// Go straight to the nearest square of a named world terrain (testing)
+      std::string name = string_input_popup("World terrain (e.g. lab, \
+substation, military outpost):");
+      Point here(map->posx + player->pos.x / SUBMAP_SIZE,
+                 map->posy + player->pos.y / SUBMAP_SIZE);
+      Point best(-1, -1);
+      int bestd = 999999;
+      for (int x = 0; x < WORLDMAP_SIZE; x++) {
+        for (int y = 0; y < WORLDMAP_SIZE; y++) {
+          if (worldmap->get_name(x, y) == name && rl_dist(here, Point(x, y)) < bestd) {
+            bestd = rl_dist(here, Point(x, y));
+            best = Point(x, y);
+          }
+        }
+      }
+      if (name == "errand" && job.active()) {
+        best = job.target;
+      }
+      if (best.x < 0) {
+        add_msg("<c=dkgray>No '%s' on this island.<c=/>", name.c_str());
+        break;
+      }
+      return_offmap_monsters();
+      SUBMAP_POOL.load_area_centered_on(best.x, best.y);
+      map->generate(worldmap, best.x - MAP_SIZE / 2, best.y - MAP_SIZE / 2);
+      player->pos = Tripoint(SUBMAP_SIZE * (MAP_SIZE / 2) + SUBMAP_SIZE / 2,
+                             SUBMAP_SIZE * (MAP_SIZE / 2) + SUBMAP_SIZE - 2, 0);
+      add_msg("You are at %s [%d:%d].", name.c_str(), best.x, best.y);
+    } break;
+
+    case DEBUG_ACTION_FACTION_TEST: {
+// Trust and money from everyone, and a week of the factions' race; if a
+// faction already holds the Lab, its countdown ends now.
+      if (lab.holder >= 0) {
+        lab.countdown = time.get_turn() + 1;
+        break;
+      }
+      for (int g = 0; g < NUM_GROUPS; g++) {
+        factions[g].standing += 30;
+        factions[g].missions += 4;
+        factions[g].progress += 30;
+      }
+      trade_credit += 300;
+      faction_dawn();
+      add_msg("Factions: C %d, M %d, N %d, S %d.  Member: %d.  Holder: %d.",
+              factions[GROUP_CULTISTS].progress,
+              factions[GROUP_MILITARY].progress,
+              factions[GROUP_NATURALISTS].progress,
+              factions[GROUP_SCIENTISTS].progress, member, lab.holder);
     } break;
 
     case DEBUG_ACTION_KILL_PLAYER:

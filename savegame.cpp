@@ -424,6 +424,24 @@ bool Game::save_game()
          boat.rations << " " << boat.drinks << std::endl;
   out << "Lab: " << lab.plant_on << " " << lab.substation_on << " " <<
          lab.open << std::endl;
+  out << "Lab2: " << lab.control_on << " " << lab.corner_power << " " <<
+         lab.holder << " " << lab.countdown << std::endl;
+  out << "Mode: " << sandbox << " " << factions_on << " " << member <<
+         std::endl;
+  for (int g = 0; g < NUM_GROUPS; g++) {
+    out << "Faction: " << g << " " << factions[g].standing << " " <<
+           factions[g].missions << " " << factions[g].progress << std::endl;
+  }
+  if (job.active()) {
+    out << "Errand: " << job.giver << " " << job.kind << " " << job.to <<
+           " " << job.reward << " " << job.bit << " " << job.target.x << " " <<
+           job.target.y << " " << job.placed << " " << job.done << " " <<
+           job.place << std::endl;
+  }
+  for (int i = 0; i < planted.size(); i++) {
+    out << "Planted: " << planted[i].world.x << " " << planted[i].world.y <<
+           " " << planted[i].placed << " " << planted[i].item << std::endl;
+  }
   out << "Credit: " << trade_credit << std::endl;
   if (!camp_job.empty()) {
     out << "Job: " << camp_job << std::endl;
@@ -501,6 +519,15 @@ bool Game::load_game(std::string world_name)
   int mapx = 0, mapy = 0, mapz = 0, turn = 0;
   bool ok = true;
 
+  for (int g = 0; g < NUM_GROUPS; g++) {
+    factions[g] = Faction_state();
+  }
+  member = GROUP_NONE;
+  job = Job();
+  planted.clear();
+  sandbox = false;
+  factions_on = true;
+  bool new_format = false;   // saves from before the factions (0.6.x)
   std::string ident;
   while (ok && fin >> ident) {
     ident = no_caps(ident);
@@ -518,6 +545,38 @@ bool Game::load_game(std::string world_name)
       boat.hull = (h != 0);
       boat.sail = (s != 0);
       boat.gps  = (g != 0);
+    } else if (ident == "lab2:") {
+      new_format = true;
+      int c;
+      fin >> c >> lab.corner_power >> lab.holder >> lab.countdown;
+      lab.control_on = (c != 0);
+    } else if (ident == "mode:") {
+      int sb, fo;
+      fin >> sb >> fo >> member;
+      sandbox = (sb != 0);
+      factions_on = (fo != 0);
+    } else if (ident == "faction:") {
+      int g, st, mi, pr;
+      fin >> g >> st >> mi >> pr;
+      if (g >= 0 && g < NUM_GROUPS) {
+        factions[g].standing = st;
+        factions[g].missions = mi;
+        factions[g].progress = pr;
+      }
+    } else if (ident == "errand:") {
+      int pl, dn;
+      fin >> job.giver >> job.kind >> job.to >> job.reward >> job.bit >>
+             job.target.x >> job.target.y >> pl >> dn;
+      job.placed = (pl != 0);
+      job.done = (dn != 0);
+      job.place = trim(rest_of_line(fin));
+    } else if (ident == "planted:") {
+      Planted_item it;
+      int pl;
+      fin >> it.world.x >> it.world.y >> pl;
+      it.placed = (pl != 0);
+      it.item = trim(rest_of_line(fin));
+      planted.push_back(it);
     } else if (ident == "credit:") {
       fin >> trade_credit;
     } else if (ident == "job:") {
@@ -548,6 +607,12 @@ bool Game::load_game(std::string world_name)
   if (!ok) {
     popup("The saved game in %s is damaged.", world_name.c_str());
     return false;
+  }
+// A world made before the factions has no Control Station and no bases:
+// its Lab opens as it did then, and no faction races for it.
+  if (!new_format) {
+    lab.control_on = true;
+    factions_on = false;
   }
 
   time = Time(turn);

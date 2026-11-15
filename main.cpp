@@ -1,3 +1,6 @@
+#include "worldmap.h"
+#include <cstdlib>
+#include <cstdio>
 #include "globals.h"
 #include "window.h"
 #include "rng.h"
@@ -46,6 +49,36 @@ int main(int argc, char* argv[])
   }
 
   load_global_data(); // See globals.cpp
+
+// C2_WORLDGEN_TEST=N: generate N islands and report what each holds, then
+// exit (Asciiverse, 2026: for AddressSanitizer runs over many worlds).
+  if (getenv("C2_WORLDGEN_TEST")) {
+    int n = atoi(getenv("C2_WORLDGEN_TEST"));
+    const char* sites[] = { "lab", "lab substation", "power plant",
+      "substation", "control station", "bunker", "derelict",
+      "cultist shrine", "military outpost", "naturalist commune",
+      "science station", "survivor camp", "raider camp", "beach", NULL };
+    for (int i = 0; i < n; i++) {
+      Worldmap* w = new Worldmap;
+      w->generate();
+      fprintf(stderr, "world %d:", i);
+      for (int k = 0; sites[k]; k++) {
+        int count = 0;
+        for (int x = 0; x < WORLDMAP_SIZE; x++) {
+          for (int y = 0; y < WORLDMAP_SIZE; y++) {
+            if (w->get_name(x, y) == sites[k]) {
+              count++;
+            }
+          }
+        }
+        fprintf(stderr, " %s=%d", sites[k], count);
+      }
+      fprintf(stderr, "\n");
+      delete w;
+    }
+    endwin();
+    return 0;
+  }
 
 #ifndef _WIN32
   signal(SIGHUP, request_hangup);

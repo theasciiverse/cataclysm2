@@ -53,8 +53,8 @@ Whales' "bad win": a seaworthy boat and a working GPS.
       breakers, show the passcard from the plant's office at the blast door
 - [x] The Lab's core: shutting it down closes the seam the monsters come
       through, the good ending while no faction contests it
-- [ ] The other corner Substations, the other three passcards (landing
-      strip, silo, sea) and the Control Station, as in Whales' notes
+- [x] The other corner Substations, passcards and the Control Station
+      (0.7.0)
 
 ## 0.6.0: people, first: the camps
 
@@ -69,15 +69,32 @@ Whales' "bad win": a seaworthy boat and a working GPS.
 - [x] Two raider camps (`R`): raiders and raider gunmen, hostile to
       everything, guarding what they have taken from others
 
-## Toward 1.0.0: people
+## 0.7.0: people and the race for the Lab
 
-- [ ] Camp folk as people you can see and talk to, missions that send you
-      somewhere
-- [ ] The four factions (Cultists, Military, Naturalists, Scientists),
-      their missions, rank, and their fight for the Lab
-- [ ] Story mode and sandbox mode
-- [ ] The rest of the Lab's machinery from Whales' notes: four corner
-      substations, the other passcards, the Control Station
-- [ ] Balance from people playing it: food clock, monster strength, prices
+- [x] People you can see and talk to: walk into them.  Camp folk in the
+      farming camps; each faction's people at its base
+- [x] The four factions (Cultists, Military, Naturalists, Scientists),
+      each with a base, a counter for its members, rank, feuds, and its
+      own errands; joining, and being cast out
+- [x] Errands that send you somewhere: look over a place, clear a raider
+      camp, fetch a supply case, carry a letter, power a corner Substation;
+      the target flagged on the small map
+- [x] The race: the factions close in on the Lab day by day; whoever takes
+      it holds it toward victory; shut the Power Plant down to break a
+      rival's hold; hand the Lab to your own faction at the core
+- [x] Four faction endings, and a loss when a rival's hold runs out
+- [x] The rest of the Lab: corner Substations, four passcards (bunker,
+      wrecked ship, the largest town, a house anywhere), the Control
+      Station's remote release
+- [x] Story mode and sandbox mode (no race; factions optional; fewer or
+      more monsters)
+
+## Toward 1.0.0
+
+- [ ] Balance from people playing it: food clock, monster strength, prices,
+      how fast the factions race
+- [ ] Faction people who move about: patrols, and the factions fighting over
+      places, not just the Lab
 - [ ] Whales' unfinished item types: gun mods, bionics (`docs/todo.txt`)
+- [ ] The notes' other places: landing strip, missile silo, hospital
 - [x] Smaller saves: tile runs took a new world from 44 MB to 6 MB

@@ -43,6 +43,8 @@ public:
   void place_monsters();
   void place_lab();   // lab.cpp
   void place_camps(); // camp.cpp
+  void place_factions(); // people.cpp
+  std::vector<Point> marks;  // squares to flag on the island map (errands)
   void add_bonus(int x, int y, bool debug = false);
   void set_terrain(int x, int y, std::string terrain_name);
 

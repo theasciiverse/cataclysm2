@@ -37,8 +37,14 @@ Listen to the radio from your wreck.  The wreck itself is on the beach where you
 
 <c=white>The island map<c=/>
 
-Open it with <c=magenta>:<c=/>.  <c=ltgreen>C<c=/> marks a farming camp that trades (examine its counter), <c=ltred>R<c=/> a raider camp, <c=ltcyan>L<c=/> the Lab at the island's heart, <c=yellow>s<c=/> its substation and <c=ltred>P<c=/> the power plant.  Press <c=magenta>/<c=/> on the map to search for a place by name.
+Open it with <c=magenta>:<c=/>.  <c=ltgreen>C<c=/> marks a farming camp that trades (examine its counter), <c=ltred>R<c=/> a raider camp, <c=ltcyan>L<c=/> the Lab at the island's heart, <c=yellow>s<c=/> its substation and <c=ltred>P<c=/> the power plant.  <c=brown>s<c=/> marks the corner substations, <c=ltcyan>K<c=/> the Control Station, <c=ltgray>B<c=/> an old bunker and <c=ltgray>D<c=/> a wrecked ship.  The factions: <c=magenta>c<c=/> the Cultists' shrine, <c=green>M<c=/> the Military outpost, <c=brown>N<c=/> the Naturalists' commune, <c=ltblue>S<c=/> the Scientists' station.  Press <c=magenta>/<c=/> on the map to search for a place by name.  The small map beside the view flags your errand's target with a <c=magenta>!<c=/>.
+
+<c=white>People and factions<c=/>
+
+Walk into people to talk to them.  Camp folk give errands and gossip; the four factions (the <c=magenta>Cultists<c=/>, the <c=green>Military<c=/>, the <c=brown>Naturalists<c=/> and the <c=ltblue>Scientists<c=/>) give orders, and let you join.  Errands send you across the island: look over a place, clear out a raider camp, fetch a supply case, carry a sealed letter, or bring a corner substation back to life.  Report back and you're paid on account.  Members buy from their faction's counter, rise in rank, and are hated by the factions theirs is at odds with.
+
+In story mode the factions race each other for the Lab.  The radio and anyone you talk to will tell you how close they are.  If a rival takes it, you have seven days to cut its power at the plant, or the island is theirs.
 
 <c=white>The Lab<c=/>
 
-The Lab's blast door needs power and a passcard.  Get the power plant running (you'll need a wrench), close the breakers at the Lab's substation, and look for a passcard: the plant's staff kept one in their office.
+The Lab's blast door needs power, the Control Station's remote release, and a passcard.  Get the power plant running (you'll need a wrench), close the breakers at the Lab's substation, throw the switch at the Control Station, and find one of the four passcards: one in an old bunker, one aboard a wreck on a far shore, two with Lab staff who fled into the towns.  Ask around: people know where.  At the core you can close the seam for good, or, if your faction trusts you, hand the Lab to them and hold it for three days.

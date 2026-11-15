@@ -4,7 +4,33 @@
 
 # Pure weapons / vanilla items
 
-# The Lab's passcard (Asciiverse, 2026); one lies in the Power Plant's office.
+# Faction errands (Asciiverse, 2026; people.cpp): a case to fetch and a
+# letter to carry.
+weapon
+  name: supply case
+  description:
+    A battered steel case, padlocked, with a faction's sign painted over the
+    old company stencil.  Whatever is inside rattles.  Someone is waiting for
+    it.
+  done
+  glyph: [ brown black
+  weight: 40
+  volume: 20
+done
+
+weapon
+  name: sealed letter
+  description:
+    A folded letter sealed with candle wax and a thumbprint.  It is not for
+    you, and the people who gave it to you would know if you opened it.
+  done
+  glyph: ? white black
+  weight: 0
+  volume: 0
+done
+
+# The Lab's passcards (Asciiverse, 2026): four lie hidden on the island,
+# after Whales' notes; any one opens the reader.
 weapon
   name: Lab passcard
   description:

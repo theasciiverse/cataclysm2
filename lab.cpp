@@ -20,6 +20,7 @@
 #include <sstream>
 
 std::string wrap_tagged(std::string text, int width);  // escape.cpp
+int text_menu(std::string text, std::vector<std::string> options);
 
 static bool is_land(Worldmap* world, Point p)
 {
@@ -117,6 +118,36 @@ void Worldmap::place_lab()
 
 /**** Working the Lab's machinery ****/
 
+static int pending_corner = -1;   // which corner Substation is being worked
+
+// Which corner Substation (0 to 2) the player stands in, or -1.
+static int corner_here(Game* g)
+{
+  int wx = g->map->posx + g->player->pos.x / SUBMAP_SIZE;
+  int wy = g->map->posy + g->player->pos.y / SUBMAP_SIZE;
+  if (g->worldmap->get_name(wx, wy) != "substation") {
+    return -1;
+  }
+  int n = 0;
+  for (int x = 0; x < WORLDMAP_SIZE; x++) {
+    for (int y = 0; y < WORLDMAP_SIZE; y++) {
+      Worldmap_tile* t = g->worldmap->get_tile(x, y, false);
+      if (t && t->terrain && t->terrain->name == "substation") {
+        if (x == wx && y == wy) {
+          return n < 3 ? n : 2;
+        }
+        n++;
+      }
+    }
+  }
+  return -1;
+}
+
+static const char* FACTION_NAMES[NUM_GROUPS] = {
+  "the camps", "the raiders", "the Cultists", "the Military",
+  "the Naturalists", "the Scientists"
+};
+
 static bool has_item_named(Player* pl, std::string name)
 {
   name = no_caps(name);
@@ -138,7 +169,21 @@ bool Game::examine_lab_machinery(Tripoint pos)
 {
   std::string ter = map->get_name(pos);
   if (ter == "plant control panel") {
-    if (lab.plant_on) {
+    if (lab.plant_on && lab.holder >= 0 && lab.holder != member) {
+      std::string q = std::string("The turbines hum.  ") +
+                      FACTION_NAMES[lab.holder] + " hold the Lab on this \
+power.  Shut the plant down and break their hold?";
+      if (query_yn(q.c_str())) {
+        add_msg("<c=ltgreen>You throw the turbines out of gear.  The lines \
+to the Lab go dead, and with them %s's hold on it.<c=/>",
+                FACTION_NAMES[lab.holder]);
+        factions[lab.holder].progress = 60;
+        hurt_standing(lab.holder, 30);
+        lab.holder = -1;
+        lab.plant_on = false;
+        player->use_ap(100);
+      }
+    } else if (lab.plant_on) {
       popup("The turbines hum behind you.  The plant is running, and the \
 lines north to the Lab carry power again.");
     } else if (!has_item_named(player, "wrench")) {
@@ -148,6 +193,34 @@ and bring the plant back to life.", 70).c_str());
     } else if (query_yn("Free the turbines and restart the plant?  (2 hours)")) {
       add_msg("You set to work on the turbines.");
       player->set_activity(PLAYER_ACTIVITY_BOAT_WORK, HOURS(2) * 100, 10);
+    }
+    return true;
+  }
+  if (ter == "breaker panel" && corner_here(this) >= 0) {
+    int c = corner_here(this);
+    if (lab.corner_power & (1 << c)) {
+      popup("The breakers are closed.  This corner of the island has power.");
+    } else if (!lab.plant_on) {
+      popup(wrap_tagged("The breakers are open, and nothing would come \
+through them: the <c=yellow>power plant<c=/> isn't running.", 70).c_str());
+    } else if (query_yn("Close the breakers and bring power to this corner \
+of the island?")) {
+      add_msg("You work the breakers closed one by one.");
+      pending_corner = c;
+      player->set_activity(PLAYER_ACTIVITY_BOAT_WORK, MINUTES(10) * 100, 12);
+    }
+    return true;
+  }
+  if (ter == "lab remote switch") {
+    if (lab.control_on) {
+      popup("The switch is thrown.  On the panel, LAB ENTRANCE: RELEASED.");
+    } else if (!lab.plant_on) {
+      popup(wrap_tagged("A heavy switch under a glass cover: <c=yellow>LAB \
+ENTRANCE, REMOTE RELEASE<c=/>.  The panel is dark.  It needs the <c=yellow>power \
+plant<c=/> running.", 70).c_str());
+    } else if (query_yn("Break the glass and throw the Lab's remote release?")) {
+      add_msg("You throw the switch.  Somewhere to the south, bolts slide.");
+      player->set_activity(PLAYER_ACTIVITY_BOAT_WORK, MINUTES(2) * 100, 13);
     }
     return true;
   }
@@ -170,9 +243,14 @@ difference: no power reaches the substation.  Somewhere on the island, a \
 is dead: no power reaches the Lab.  It needs the <c=yellow>power plant<c=/> \
 running and the Lab's <c=yellow>substation<c=/> passing the power on.",
                         70).c_str());
+    } else if (!lab.control_on) {
+      popup(wrap_tagged("The card reader is lit, but a second panel beside \
+it reads <c=ltred>REMOTE RELEASE NOT SET<c=/>.  The Lab's door answers to the \
+<c=yellow>Control Station<c=/> as well as a card.", 70).c_str());
     } else if (!has_item_named(player, "Lab passcard")) {
       popup(wrap_tagged("The card reader beside the blast door glows red: \
-<c=ltred>PASSCARD REQUIRED<c=/>.", 70).c_str());
+<c=ltred>PASSCARD REQUIRED<c=/>.  Four were made; any one will do.",
+                        70).c_str());
     } else {
       add_msg("You hold the passcard to the reader.  It chirps green.");
       map->apply_signal("unlock", pos, player);
@@ -189,8 +267,37 @@ running and the Lab's <c=yellow>substation<c=/> passing the power on.",
             "island came through seams like this one.  The console in front " <<
             "of you still answers.";
     popup(wrap_tagged(text.str(), 70).c_str());
-    if (query_yn("Shut the core down and close the seam for good?")) {
+    std::vector<std::string> opts;
+    std::vector<int> acts;
+    opts.push_back("Shut the core down and close the seam for good");
+    acts.push_back(1);
+    int rank_missions = (member >= 0) ? factions[member].missions : 0;
+    if (!sandbox && member >= GROUP_CULTISTS && lab.holder < 0) {
+      std::string o = std::string("Hand the Lab to ") + FACTION_NAMES[member];
+      if (rank_missions < 4) {
+        o += " (they don't trust you enough yet)";
+      }
+      opts.push_back(o);
+      acts.push_back(2);
+    }
+    opts.push_back("Leave it be");
+    acts.push_back(0);
+    int pick = text_menu("The console waits.", opts);
+    int act = (pick >= 0 && pick < acts.size()) ? acts[pick] : 0;
+    if (act == 1) {
       lab_victory();
+    } else if (act == 2) {
+      if (rank_missions < 4) {
+        popup(wrap_tagged(std::string("You radio ") + FACTION_NAMES[member] +
+                          ".  \"You?  Hold it, and we'll talk when you've \
+proven yourself.\"  (Do more of their errands.)", 66).c_str());
+      } else {
+        lab.holder = member;
+        lab.countdown = time.get_turn() + DAYS(3);
+        add_msg("<c=ltgreen>You radio %s, and their people pour in.  The \
+Lab is theirs.  Hold out three days and the island is too.<c=/>",
+                FACTION_NAMES[member]);
+      }
     }
     return true;
   }
@@ -203,6 +310,16 @@ void Game::finish_lab_work(int stage)
     lab.plant_on = true;
     add_msg("<c=ltgreen>The turbines shudder, catch, and roar.  The power \
 plant is running.<c=/>");
+  } else if (stage == 12) {
+    if (pending_corner >= 0) {
+      lab.corner_power |= (1 << pending_corner);
+    }
+    pending_corner = -1;
+    add_msg("<c=ltgreen>The last breaker closes.  Lights come on across \
+this corner of the island.<c=/>");
+  } else if (stage == 13) {
+    lab.control_on = true;
+    add_msg("<c=ltgreen>The panel reads LAB ENTRANCE: RELEASED.<c=/>");
   } else if (stage == 11) {
     lab.substation_on = true;
     add_msg("<c=ltgreen>The last breaker closes with a bang.  Power runs on \
@@ -225,8 +342,7 @@ void Game::lab_victory()
     "year.  The island can be lived on.\n\n" <<
     name << " survived " << days_text(days) << " and won the island " <<
     "back.\n\n" <<
-    "<c=dkgray>In Whales' plan, four factions fight for this room.  They " <<
-    "are not on the island yet.<c=/>";
+    "<c=dkgray>The factions will fight over the empty room for years.<c=/>";
   popup(wrap_tagged(text.str(), 66).c_str());
   delete_save();
   game_over = true;

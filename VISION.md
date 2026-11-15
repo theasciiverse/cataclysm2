@@ -127,3 +127,48 @@ are recorded below as they are made.
   read that" tasks; the camps add simple fetch jobs ("bring us a first aid
   kit"), listed in `data/trade.dat`, paid in credit and a little
   experience.
+- **People as monsters with manners** (2026-11-15): the engine still has no
+  NPC class.  People are monsters of six genera (`survivors`, `raiders`,
+  `cultists`, `military`, `naturalists`, `scientists`) whose quarrels
+  `Monster::is_enemy()` decides in `people.cpp`: neutral to you until you
+  give them reason, feuding by faction, the aliens sparing the Cultists'
+  own.  Walk into one to talk.  Their names are made up from a short list.
+- **The four factions, cut to what one player can feel** (2026-11-15):
+  each has one base (shrine, outpost, commune, station) with its own
+  people and a counter selling its own stock to members (`data/trade.dat`).
+  Joining: the Military and the Naturalists take anyone; the Scientists
+  want you to have helped them once, the Cultists twice (Whales' "alien
+  infection" test has no alien biology to test yet).  Rank comes from
+  errands done (2, 4 and 7), and the rank names are ours.  Feuds: the
+  Cultists and the Military against everyone, the Naturalists and the
+  Scientists against those two; members of a feuding faction are shot on
+  sight, except by the Naturalists, who "welcome them, with suspicion".
+  Faction perks beyond the counter (agents, powers, squads) are not in.
+- **Errands that send you somewhere** (2026-11-15): five kinds (look over
+  a place, clear a raider camp, fetch a supply case left in a town, carry a
+  sealed letter to a friendly group, switch a corner Substation on), with
+  each faction's own voice.  The target is flagged on the small map.
+- **The race for the Lab** (2026-11-15): in story mode each faction gains
+  1 to 3 points toward the Lab every dawn, and 5 more for each errand you
+  do for the faction you joined; at 100 it takes the Lab (and gets its
+  power running).  If it is yours, three days of holding it win the game;
+  if it is a rival's, seven days end it, unless you shut the Power Plant
+  down to break their hold.  You can also open the Lab yourself and hand
+  it to your faction at the core (once you have done four errands for it),
+  which starts the same three days.  The notes' faction powers (spawn
+  storms, teleports and so on) are told in the endings, not played.
+- **The rest of the Lab** (2026-11-15): Whales' four corner Substations
+  become three (the Power Plant takes the fourth corner, as in the notes);
+  switching them on is errand work and lights the corner.  The four
+  passcards: A in an old bunker, C aboard a wrecked ship on a far shore,
+  B in a building in the largest town and D in a building anywhere (the
+  notes' landing strip, missile silo and hospital are not on the island
+  yet).  The Control Station's remote release is needed as well as a
+  card.  The Power Plant's office no longer holds a card.
+- **Story and sandbox** (2026-11-15): story mode has the race and every
+  ending; sandbox mode has no race and no countdowns, can leave the
+  factions out, and can make monsters scarcer or commoner.  The boat and
+  the seam stay as endings you choose in either mode.  Whales' "survival
+  mode" (waves against a defended place) is not in.
+- **Old saves** (2026-11-15): a world made before the factions has no
+  Control Station; its Lab opens as before, and no faction races for it.

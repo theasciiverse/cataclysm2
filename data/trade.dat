@@ -61,3 +61,31 @@ wants: Electronics Basics = 35
 wants: Wild Edibles = 35
 wants: hunting knife = 30
 wants: work gloves = 20
+
+# The factions' counters (Asciiverse, 2026; people.cpp).  Each sells its
+# own stock, after Whales' notes, and only to its own people (any rank).
+# "<faction> sells:" lines; buying is the same as at the camps.
+military sells: 9mm = 18
+military sells: 00 shot = 20
+military sells: Glock 19 = 120
+military sells: 2-barreled shotgun = 140
+military sells: first aid kit = 30
+military sells: beef jerky = 10
+scientists sells: batteries = 6
+scientists sells: GPS unit = 90
+scientists sells: flashlight = 15
+scientists sells: first aid kit = 25
+scientists sells: wrench = 20
+scientists sells: processor = 30
+naturalists sells: water = 2
+naturalists sells: tomatoes = 2
+naturalists sells: beans = 2
+naturalists sells: dry rice = 4
+naturalists sells: rope = 6
+naturalists sells: tarp = 10
+naturalists sells: wood plank = 3
+cultists sells: machete = 35
+cultists sells: bandages = 8
+cultists sells: whisky = 6
+cultists sells: dry rice = 5
+cultists sells: crowbar = 25

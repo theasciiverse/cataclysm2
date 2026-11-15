@@ -397,3 +397,256 @@ name: raider gunman
     pierce: 12
   done
 done
+
+##### People (Asciiverse, 2026; people.cpp) #####
+
+name: camp elder
+  name_plural: camp elders
+  genus: survivors
+  glyph: @ ltgreen black
+  chance: 25
+  attack:
+    verb: strike / strikes
+    weight: 3
+    speed: 100
+    to_hit: 1
+    bash: 5
+  done
+done
+
+name: farmer
+  name_plural: farmers
+  genus: survivors
+  glyph: @ green black
+  chance: 60
+  attack:
+    verb: strike / strikes
+    weight: 3
+    speed: 100
+    to_hit: 1
+    bash: 5
+  done
+done
+
+name: camp guard
+  name_plural: camp guards
+  genus: survivors
+  glyph: @ white black
+  chance: 35
+  attack:
+    verb: stab / stabs
+    weight: 3
+    speed: 100
+    to_hit: 1
+    cut: 9
+  done
+  ranged_attack:
+    verb: shoot / shoots
+    speed: 100
+    charge: 4
+    range: 10
+    variance: 3d20
+    pierce: 10
+  done
+done
+
+name: cult hierophant
+  name_plural: cult hierophants
+  genus: cultists
+  glyph: @ pink black
+  chance: 15
+  attack:
+    verb: strike / strikes
+    weight: 3
+    speed: 100
+    to_hit: 1
+    bash: 8
+  done
+done
+
+name: fungal acolyte
+  name_plural: fungal acolytes
+  genus: cultists
+  glyph: @ magenta black
+  chance: 60
+  attack:
+    verb: claw / claws
+    weight: 3
+    speed: 100
+    to_hit: 1
+    cut: 6
+  done
+done
+
+name: cult zealot
+  name_plural: cult zealots
+  genus: cultists
+  glyph: @ ltred black
+  chance: 35
+  attack:
+    verb: slash / slashes
+    weight: 3
+    speed: 100
+    to_hit: 1
+    cut: 11
+  done
+done
+
+name: outpost commander
+  name_plural: outpost commanders
+  genus: military
+  glyph: @ ltgreen black
+  chance: 15
+  attack:
+    verb: strike / strikes
+    weight: 3
+    speed: 100
+    to_hit: 1
+    bash: 8
+  done
+  ranged_attack:
+    verb: shoot / shoots
+    speed: 100
+    charge: 4
+    range: 14
+    variance: 3d20
+    pierce: 14
+  done
+done
+
+name: soldier
+  name_plural: soldiers
+  genus: military
+  glyph: @ green black
+  chance: 70
+  attack:
+    verb: strike / strikes
+    weight: 3
+    speed: 100
+    to_hit: 1
+    bash: 7
+  done
+  ranged_attack:
+    verb: shoot / shoots
+    speed: 100
+    charge: 4
+    range: 14
+    variance: 3d20
+    pierce: 14
+  done
+done
+
+name: sergeant
+  name_plural: sergeants
+  genus: military
+  glyph: @ yellow black
+  chance: 25
+  attack:
+    verb: strike / strikes
+    weight: 3
+    speed: 100
+    to_hit: 1
+    bash: 8
+  done
+  ranged_attack:
+    verb: shoot / shoots
+    speed: 100
+    charge: 4
+    range: 12
+    variance: 3d20
+    pierce: 12
+  done
+done
+
+name: commune speaker
+  name_plural: commune speakers
+  genus: naturalists
+  glyph: @ yellow black
+  chance: 15
+  attack:
+    verb: strike / strikes
+    weight: 3
+    speed: 100
+    to_hit: 1
+    bash: 6
+  done
+done
+
+name: naturalist
+  name_plural: naturalists
+  genus: naturalists
+  glyph: @ brown black
+  chance: 70
+  attack:
+    verb: strike / strikes
+    weight: 3
+    speed: 100
+    to_hit: 1
+    bash: 6
+  done
+done
+
+name: ranger
+  name_plural: rangers
+  genus: naturalists
+  glyph: @ green black
+  chance: 35
+  attack:
+    verb: slash / slashes
+    weight: 3
+    speed: 100
+    to_hit: 1
+    cut: 9
+  done
+  ranged_attack:
+    verb: loose an arrow at / looses an arrow at
+    speed: 100
+    charge: 4
+    range: 12
+    variance: 3d20
+    pierce: 9
+  done
+done
+
+name: station director
+  name_plural: station directors
+  genus: scientists
+  glyph: @ ltblue black
+  chance: 15
+  attack:
+    verb: strike / strikes
+    weight: 3
+    speed: 100
+    to_hit: 1
+    bash: 4
+  done
+done
+
+name: researcher
+  name_plural: researchers
+  genus: scientists
+  glyph: @ cyan black
+  chance: 65
+  attack:
+    verb: strike / strikes
+    weight: 3
+    speed: 100
+    to_hit: 1
+    bash: 4
+  done
+done
+
+name: security eyebot
+  name_plural: security eyebots
+  genus: scientists
+  glyph: e ltblue black
+  chance: 35
+  ranged_attack:
+    verb: zap / zaps
+    speed: 100
+    charge: 4
+    range: 10
+    variance: 3d20
+    pierce: 8
+  done
+done

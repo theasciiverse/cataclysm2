@@ -98,7 +98,6 @@ tile: ' = closed door
 tile: " = window
 tile: o = floor
 tile: d = floor
-num_items: o = w:1 c: 1; Lab passcard
 items: 40 d = w:4 batteries / w:2 flashlight / w:2 first aid kit / w:3 wrench / w:2 hammer
 items: 30 m = w:3 nails / w:2 metal pole / w:2 tarp / w:2 rope
 map:

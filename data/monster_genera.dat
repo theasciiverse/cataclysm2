@@ -173,3 +173,162 @@ Name: raiders
     done
   done
 done
+
+# Asciiverse, 2026: people.  Who they fight is decided in people.cpp
+# (Monster::is_enemy), not by genus alone: they are neutral to you until
+# you give them reason, and the factions keep their own feuds.
+
+# Camp folk: the farming camps' people.
+Name: survivors
+  display_name: survivors
+  Default:
+    size: medium
+    hp: 4d5 + 25
+    speed: 100
+    accuracy: 7
+    dodge: 5
+    senses: sight hearing
+    AI:
+      awareness: 2
+      attention: 25
+      goals:
+        attack_enemies
+      done
+    done
+    idle_sound_chance: 20
+    idle_sound_volume: 6
+    idle_sounds: w:5 mutter / w:2 hum / w:1 cough
+    attack_sound_chance: 25
+    attack_sound_volume: 16
+    attack_sounds: w:5 shout / w:2 curse
+    attack:
+      verb: hit / hits
+      speed: 100
+      bash: 5
+    done
+  done
+done
+
+# The Cultists: worshippers of the fungus and the aliens.
+Name: cultists
+  display_name: cultists
+  Default:
+    size: medium
+    hp: 4d5 + 30
+    speed: 100
+    accuracy: 9
+    dodge: 6
+    senses: sight hearing
+    AI:
+      awareness: 2
+      attention: 25
+      goals:
+        attack_enemies
+      done
+    done
+    idle_sound_chance: 20
+    idle_sound_volume: 6
+    idle_sounds: w:5 chant / w:2 whisper / w:1 laugh
+    attack_sound_chance: 25
+    attack_sound_volume: 16
+    attack_sounds: w:5 shriek / w:3 chant
+    attack:
+      verb: hit / hits
+      speed: 100
+      bash: 7
+    done
+  done
+done
+
+# The Military: ex-soldiers and officials who want the island under orders.
+Name: military
+  display_name: military
+  Default:
+    size: medium
+    hp: 4d5 + 35
+    speed: 100
+    accuracy: 10
+    dodge: 5
+    senses: sight hearing
+    AI:
+      awareness: 2
+      attention: 25
+      goals:
+        attack_enemies
+      done
+    done
+    idle_sound_chance: 20
+    idle_sound_volume: 6
+    idle_sounds: w:5 mutter / w:2 grumble / w:1 whistle
+    attack_sound_chance: 25
+    attack_sound_volume: 16
+    attack_sounds: w:5 shout / w:3 bark
+    attack:
+      verb: hit / hits
+      speed: 100
+      bash: 7
+    done
+  done
+done
+
+# The Naturalists: a commune that wants the island back without aliens or masters.
+Name: naturalists
+  display_name: naturalists
+  Default:
+    size: medium
+    hp: 4d5 + 28
+    speed: 100
+    accuracy: 8
+    dodge: 6
+    senses: sight hearing
+    AI:
+      awareness: 2
+      attention: 25
+      goals:
+        attack_enemies
+      done
+    done
+    idle_sound_chance: 20
+    idle_sound_volume: 6
+    idle_sounds: w:5 hum / w:2 talk / w:1 sing
+    attack_sound_chance: 25
+    attack_sound_volume: 16
+    attack_sounds: w:5 shout / w:2 curse
+    attack:
+      verb: hit / hits
+      speed: 100
+      bash: 6
+    done
+  done
+done
+
+# The Scientists: researchers who see the aliens as a chance.
+Name: scientists
+  display_name: scientists
+  Default:
+    size: medium
+    hp: 4d5 + 22
+    speed: 100
+    accuracy: 8
+    dodge: 5
+    senses: sight hearing
+    AI:
+      awareness: 2
+      attention: 25
+      goals:
+        attack_enemies
+      done
+    done
+    idle_sound_chance: 20
+    idle_sound_volume: 6
+    idle_sounds: w:5 mutter / w:2 tap / w:1 cough
+    attack_sound_chance: 25
+    attack_sound_volume: 16
+    attack_sounds: w:5 shout / w:2 yelp
+    attack:
+      verb: hit / hits
+      speed: 100
+      bash: 5
+    done
+  done
+done

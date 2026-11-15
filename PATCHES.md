@@ -213,3 +213,40 @@ two have commits of their own (Wad67, 2017, one UI fix-up; mytinylab,
   written in runs, `Run: <count> <hp> <terrain>`, instead of three lines
   each. A new game's world folder went from 44 MB to 6 MB; older map files
   still load.
+
+### 0.7.0: people and the race for the Lab
+
+- **People** (`people.cpp`): six genera of people in `monster_genera.dat`
+  and `monsters.dat` (camp folk, raiders, and the four factions' people).
+  `Monster::is_enemy()` (declared in `monster.h`, defined in `people.cpp`)
+  decides who fights whom: people are neutral to the player until given
+  reason, the factions feud after Whales' notes, the aliens spare the
+  Cultists. Walking into a person talks (`Game::player_move()` calls
+  `Game::talk_to()`); `danger_near()` no longer counts people who mean no
+  harm, so you can sleep in a camp.
+- **Factions**: four bases (world terrains `cultist shrine`, `military
+  outpost`, `naturalist commune`, `science station`, maps in
+  `data/mapgen/factions.map`) placed by `Worldmap::place_factions()`;
+  joining, standing, rank, being cast out; each base's trade counter sells
+  its faction's stock to members (`<faction> sells:` lines in
+  `data/trade.dat`).
+- **Errands**: five kinds, generated per giver and saved with the game; new
+  items `supply case` and `sealed letter`; the target flagged on the small
+  map (`Worldmap::marks`, drawn by `draw_minimap()`).
+- **The race for the Lab**: faction progress each dawn
+  (`Game::faction_dawn()`), seizure, countdowns, four faction endings and a
+  loss (`Game::faction_victory()`, `Game::lab_lost()`), sabotage at the
+  Power Plant's panel, and handing the Lab to your faction at the core.
+- **The rest of the Lab** (`lab.cpp`, `data/mapgen/factions.map`): corner
+  Substations (world terrain `substation`), the bunker and the wrecked ship
+  (`bunker`, `derelict`) holding passcards, two more passcards placed in
+  towns when their square first loads (`Planted_item`), and the Control
+  Station (`control station`, terrain `lab remote switch`), now required
+  at the blast door. The Power Plant's office no longer holds a passcard.
+- **Story and sandbox mode**, chosen before character creation.
+- **Saves** gain `Lab2:`, `Mode:`, `Faction:`, `Errand:` and `Planted:`
+  lines; older saves load, with their Lab opening as before.
+- **Testing**: test mode's debug menu gains `t` (travel to a named world
+  terrain, or `errand`) and `r` (faction trust, money and a week of the
+  race; again to end a hold); `C2_WORLDGEN_TEST=N` generates N islands,
+  prints what each holds and exits (for AddressSanitizer runs).

@@ -66,6 +66,15 @@ void Worldmap::place_camps()
       bool raiders = (placed.size() >= 3);
       tiles[p.x][p.y].set_terrain(raiders ? "raider camp" : "survivor camp");
       tiles[p.x][p.y].monsters.clear();   // they keep their ground clear
+      if (!raiders) {   // their own people (people.cpp)
+        Monster_genus* folk = MONSTER_GENERA.lookup_name("survivors");
+        if (folk) {
+          Monster_spawn spawn;
+          spawn.genus = folk;
+          spawn.population = rng(3, 5);
+          tiles[p.x][p.y].monsters.push_back(spawn);
+        }
+      }
       if (raiders) {
         Monster_genus* gen = MONSTER_GENERA.lookup_name("raiders");
         if (gen) {
@@ -90,6 +99,8 @@ struct Trade_table
   std::map<std::string,int> sells;  // what one costs
   std::vector<std::string> wants;   // jobs: bring one of these ...
   std::map<std::string,int> rewards;// ... for this much
+  std::map<std::string, std::vector<std::string> > faction_order;
+  std::map<std::string, std::map<std::string,int> > faction_sells;
   Trade_table() { loaded = false; }
 };
 
@@ -124,6 +135,10 @@ static void load_trade_table()
     } else if (kind == "sells") {
       TRADE.sells[name] = value;
       TRADE.sell_order.push_back(name);
+    } else if (kind.size() > 6 && kind.substr(kind.size() - 6) == " sells") {
+      std::string who = kind.substr(0, kind.size() - 6);
+      TRADE.faction_sells[who][name] = value;
+      TRADE.faction_order[who].push_back(name);
     } else if (kind == "wants") {
       TRADE.wants.push_back(name);
       TRADE.rewards[name] = value;
@@ -156,7 +171,55 @@ static std::string trader_name(Point world)
 void Game::trade_interface()
 {
   load_trade_table();
-  Point world(map->posx + MAP_SIZE / 2, map->posy + MAP_SIZE / 2);
+  Point world(map->posx + player->pos.x / SUBMAP_SIZE,
+              map->posy + player->pos.y / SUBMAP_SIZE);
+// A faction's counter sells its own stock, to its own people (people.cpp).
+  std::string here = worldmap->get_name(world.x, world.y);
+  const char* bases[4] = { "cultist shrine", "military outpost",
+                           "naturalist commune", "science station" };
+  const char* who[4] = { "cultists", "military", "naturalists", "scientists" };
+  for (int f = 0; f < 4; f++) {
+    if (here == bases[f]) {
+      if (member != GROUP_CULTISTS + f) {
+        popup(wrap_tagged("\"Members only.  Talk to one of us if you want \
+in.\"", 70).c_str());
+        return;
+      }
+      std::vector<std::string>& order = TRADE.faction_order[who[f]];
+      std::map<std::string,int>& price = TRADE.faction_sells[who[f]];
+      while (true) {
+        std::vector<std::string> labels;
+        for (int i = 0; i < order.size(); i++) {
+          std::stringstream lab;
+          lab << (price[order[i]] <= trade_credit ? "" : "<c=dkgray>") <<
+                 ITEM_TYPES.lookup_name(order[i])->name << "  " <<
+                 price[order[i]] << (price[order[i]] <= trade_credit ? "" :
+                                     "<c=/>");
+          labels.push_back(lab.str());
+        }
+        labels.push_back("Leave");
+        std::stringstream ask;
+        ask << "\"For our own.\"  You have " << trade_credit <<
+               " on account.";
+        int pick = text_menu(ask.str(), labels);
+        if (pick < 0 || pick >= order.size()) {
+          return;
+        }
+        int cost = price[order[pick]];
+        if (cost > trade_credit) {
+          popup("\"That's %d.  You have %d.\"", cost, trade_credit);
+          continue;
+        }
+        Item bought( ITEM_TYPES.lookup_name(order[pick]) );
+        bought.prep_for_generation();
+        trade_credit -= cost;
+        if (!player->add_item(bought)) {
+          map->add_item(bought, player->pos);
+        }
+        add_msg("You buy %s.", bought.get_name_indefinite().c_str());
+      }
+    }
+  }
   std::string camp = camp_name(world), trader = trader_name(world);
 
   while (true) {

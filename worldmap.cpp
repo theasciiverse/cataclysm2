@@ -510,6 +510,11 @@ void Worldmap::draw_minimap(cuss::element *drawing, int cornerx, int cornery)
     for (int y = 0; y < drawing->sizey; y++) {
       int terx = cornerx + x, tery = cornery + y;
       glyph sym = get_glyph(terx, tery);
+      for (int m = 0; m < marks.size(); m++) {
+        if (marks[m].x == terx && marks[m].y == tery) {
+          sym = glyph('!', c_magenta, c_black);
+        }
+      }
       if (x == drawing->sizex / 2 && y == drawing->sizey / 2) {
         sym = sym.invert();
       }

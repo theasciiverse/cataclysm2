@@ -10,6 +10,8 @@
 #include "pathfind.h"
 #include "time.h"
 #include "sound.h"
+#include <sstream>
+#include <vector>
 
 // Identical messages within MESSAGE_GAP turns of each other are combined
 #define MESSAGE_GAP 3
@@ -28,8 +30,66 @@ std::string days_text(int days);   // "3 days" (escape.cpp)
 // The Lab and what powers it (lab.cpp)
 struct Lab_state
 {
-  Lab_state() { plant_on = false; substation_on = false; open = false; }
+  Lab_state() { plant_on = false; substation_on = false; open = false;
+                control_on = false; corner_power = 0; holder = -1;
+                countdown = 0; }
   bool plant_on, substation_on, open;
+  bool control_on;    // the Control Station's remote switch is thrown
+  int corner_power;   // corner Substations switched on (bits 0 to 2)
+  int holder;         // the faction holding the Lab (GROUP_*), or -1
+  int countdown;      // the turn their hold becomes victory
+};
+
+// People and factions (people.cpp), after Whales' notes (docs/notes.txt).
+enum Group_id
+{
+  GROUP_NONE = -1,
+  GROUP_SURVIVORS = 0,
+  GROUP_RAIDERS,
+  GROUP_CULTISTS,
+  GROUP_MILITARY,
+  GROUP_NATURALISTS,
+  GROUP_SCIENTISTS,
+  NUM_GROUPS
+};
+
+struct Faction_state
+{
+  Faction_state() { standing = 0; missions = 0; progress = 0; }
+  int standing;  // what they think of you
+  int missions;  // errands done for them
+  int progress;  // how near they are to taking the Lab (0 to 100)
+};
+
+enum Job_kind
+{
+  JOB_NONE = 0,
+  JOB_SCOUT,    // go and look at a place
+  JOB_CLEAR,    // clear a place of what threatens them
+  JOB_FETCH,    // fetch a supply case left at a place
+  JOB_DELIVER,  // carry a sealed letter to another group
+  JOB_POWER     // switch a corner Substation on
+};
+
+struct Job
+{
+  Job() { giver = GROUP_NONE; kind = JOB_NONE; to = GROUP_NONE;
+          reward = 0; placed = false; done = false; bit = 0; }
+  bool active() const { return kind != JOB_NONE; }
+  int giver, kind, to, reward, bit;
+  Point target;        // world map square
+  std::string place;   // "the raider camp", "the bunker" ...
+  bool placed;         // the case is on the ground
+  bool done;           // done: report back to the giver's people
+};
+
+// Something hidden at a world map square, placed when the square is
+// first in view (a passcard in the largest town, a case for an errand).
+struct Planted_item
+{
+  Point world;
+  std::string item;
+  bool placed;
 };
 
 struct Game_message
@@ -85,6 +145,22 @@ public:
   void finish_lab_work(int stage);
   void lab_victory();
   Lab_state lab;
+/**** People and factions - people.cpp ****/
+  void talk_to(Monster* mon);
+  void people_turn();          // errands, hidden things, the factions' clock
+  void faction_dawn();         // a day of the factions' race for the Lab
+  void faction_news(std::stringstream& text);  // for the radio
+  bool group_hostile_to_player(int group);
+  void hurt_standing(int group, int amount);
+  void faction_victory(int group);
+  void lab_lost(int group);
+  std::string job_text();
+  Faction_state factions[NUM_GROUPS];
+  int member;                  // the faction you joined, or GROUP_NONE
+  Job job;
+  std::vector<Planted_item> planted;
+  bool sandbox;                // no faction clock, no countdowns
+  bool factions_on;
 /**** Survivor camps - camp.cpp ****/
   void trade_interface();
   int trade_credit;

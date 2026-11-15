@@ -1119,3 +1119,10 @@ name: trade counter
   movecost: 0
   height: 40
 done
+
+# The Control Station's remote switch for the Lab's blast door (Asciiverse,
+# 2026): examine it (lab.cpp).
+name: lab remote switch
+  glyph: & ltcyan black
+  movecost: 0
+done

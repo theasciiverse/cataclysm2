@@ -504,8 +504,9 @@ void Game::listen_radio()
     text << "The Lab stands open at the island's heart.  Its core is " <<
             "where the monsters come from." << std::endl << std::endl;
   } else {
-    text << "A lab at the island's heart, with a door that wants power and " <<
-            "a passcard." << std::endl << std::endl;
+    text << "A lab at the island's heart, with a door that wants power, " <<
+            "a passcard and the Control Station's release." << std::endl <<
+            std::endl;
   }
   if (boat_ready()) {
     text << "Your boat is ready on the beach.  All that's left is to sail.";
@@ -528,6 +529,11 @@ void Game::listen_radio()
       text << std::endl << "  - food and drink for the crossing (" <<
               BOAT_RATIONS << " rations, " << BOAT_DRINKS << " to drink)";
     }
+  }
+  faction_news(text);   // people.cpp
+  if (job.active()) {
+    text << std::endl << std::endl << "<c=ltgray>Your errand: " << job_text() <<
+            "<c=/>";
   }
   popup(wrap_tagged(text.str(), 74).c_str());
 }

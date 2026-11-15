@@ -357,3 +357,46 @@ Name: raider camp
   Glyph: R ltred black
   Road_cost: 500
 Done
+
+# Asciiverse, 2026: the four factions of Whales' notes (docs/notes.txt) and
+# the rest of the Lab's machinery (people.cpp, lab.cpp).
+Name: cultist shrine
+  Glyph: c magenta black
+  Road_cost: 500
+Done
+
+Name: military outpost
+  Glyph: M green black
+  Road_cost: 500
+Done
+
+Name: naturalist commune
+  Glyph: N brown black
+  Road_cost: 500
+Done
+
+Name: science station
+  Glyph: S ltblue black
+  Road_cost: 500
+Done
+
+Name: substation
+  Glyph: s brown black
+  Road_cost: 500
+Done
+
+Name: bunker
+  Glyph: B ltgray black
+  Road_cost: 500
+Done
+
+Name: derelict
+  Display_name: wrecked ship
+  Glyph: D ltgray black
+  Road_cost: 500
+Done
+
+Name: control station
+  Glyph: K ltcyan black
+  Road_cost: 500
+Done

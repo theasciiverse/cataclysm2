@@ -41,7 +41,7 @@ public:
 
   virtual int get_speed();
 
-  //virtual bool is_enemy(Entity* ent);
+  virtual bool is_enemy(Entity* ent);   // people.cpp
   void make_plans();
   virtual bool try_goal(AI_goal goal);
   virtual bool pick_attack_victim();

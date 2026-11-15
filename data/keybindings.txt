@@ -52,3 +52,5 @@ b         = place_bonus
 x         = gain_xp
 k         = kill_player
 L         = lab_test
+t         = travel
+r         = faction_test

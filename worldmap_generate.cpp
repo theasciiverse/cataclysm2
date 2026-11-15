@@ -499,6 +499,8 @@ void Worldmap::generate()
   place_lab();
 // Survivor camps that trade (camp.cpp)
   place_camps();
+// The factions' bases, corner Substations, bunker, wreck, Control Station
+  place_factions();
 }
 
 void Worldmap::place_monsters()
